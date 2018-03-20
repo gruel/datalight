@@ -1,0 +1,245 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>datalight.datalight &#8212; LightForm Data Uploader to Zenodo repositoryv0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../../index.html"><span><img src="../../_static/logo.svg"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../../index.html">LightForm Data Uploader to Zenodo repository <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul>
+<li class="toctree-l1"><a class="reference internal" href="../../management/approvals.html">Approval Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../management/changes.html">Change Records</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/scope.html">Scope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/acronyms.html">Acronyms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/howto.html">How-To</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/develop.html">Informations for developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">datalight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/uml.html">Architecture</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/markdown.html">A very simple markdown document</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary">
+<form action="../../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <h1>Source code for datalight.datalight</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Main module for datalight</span>
+
+<span class="sd">:Authors: Nicolas Gruel &lt;nicolas.gruel@manchester.ac.uk&gt;</span>
+
+<span class="sd">:Copyright: IT Services, The University of Mancheste</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">configparser</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="c1"># To get the home directory</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
+<span class="n">home</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">())</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">docopt</span> <span class="k">import</span> <span class="n">docopt</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Install docopt package: pip install docopt --user&quot;</span><span class="p">)</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.__init__</span> <span class="k">import</span> <span class="n">__version__</span>
+    <span class="kn">from</span> <span class="nn">.conf</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">__init__</span> <span class="k">import</span> <span class="n">__version__</span>
+    <span class="kn">from</span> <span class="nn">conf</span> <span class="k">import</span> <span class="n">logger</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Run datalight scripts to upload file on data repository</span>
+
+<span class="sd">    Command line::</span>
+
+<span class="sd">        Usage: datalight [-h | --help] &lt;files&gt;... --metadata=&lt;metadata&gt; [options]</span>
+
+<span class="sd">        Options:</span>
+
+<span class="sd">        --metadata=&lt;metadata&gt;     File which contains the metadata information</span>
+<span class="sd">        --repository=&lt;repository&gt; Name of a data repository [default: zenodo].</span>
+<span class="sd">        --sandbox=&lt;sandbox&gt;]</span>
+<span class="sd">        -h, --help                Print this help</span>
+<span class="sd">        --version                 Print version of the software</span>
+
+<span class="sd">        Examples:</span>
+<span class="sd">            datalight file1 file2</span>
+<span class="sd">            datalight directory --metadata=metadata.yml --repository=zenodo</span>
+
+<span class="sd">    Raises</span>
+<span class="sd">    ------</span>
+<span class="sd">    SystemExit</span>
+<span class="sd">        if the file or the folder to treat is not available.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">arguments</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="n">main</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+                       <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
+
+    <span class="c1"># Convert docopt results in the proper variable (change type when needed)</span>
+
+    <span class="n">fname</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;&lt;files&gt;&#39;</span><span class="p">]</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span>
+    <span class="n">repository</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--repository&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">repository</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">repository</span> <span class="o">=</span> <span class="s1">&#39;zenodo&#39;</span>
+
+    <span class="n">sandbox</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--sandbox&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Read metadata from file</span>
+    <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">metadata</span><span class="p">))}</span>
+
+    <span class="k">if</span> <span class="n">repository</span> <span class="o">==</span> <span class="s1">&#39;zenodo&#39;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">.zenodo</span> <span class="k">import</span> <span class="n">Zenodo</span> <span class="k">as</span> <span class="n">DataRepo</span>
+            <span class="kn">from</span> <span class="nn">.zenodo</span> <span class="k">import</span> <span class="n">ZenodoException</span> <span class="k">as</span> <span class="n">DataRepoException</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">zenodo</span> <span class="k">import</span> <span class="n">Zenodo</span> <span class="k">as</span> <span class="n">DataRepo</span>
+            <span class="kn">from</span> <span class="nn">zenodo</span> <span class="k">import</span> <span class="n">ZenodoException</span> <span class="k">as</span> <span class="n">DataRepoException</span>
+
+        <span class="c1"># Read zenodo token file from home repository</span>
+        <span class="n">tokenfile</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">home</span><span class="p">,</span> <span class="s1">&#39;.zenodo&#39;</span><span class="p">)</span>
+        <span class="n">zenoconfig</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+        <span class="n">zenoconfig</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">tokenfile</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">sandbox</span><span class="p">:</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">zenoconfig</span><span class="p">[</span><span class="s1">&#39;sandbox.zenodo.org&#39;</span><span class="p">][</span><span class="s1">&#39;lightForm&#39;</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">zenoconfig</span><span class="p">[</span><span class="s1">&#39;zenodo.org&#39;</span><span class="p">][</span><span class="s1">&#39;lightForm&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">token</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Provide Zenodo token: &#39;</span><span class="p">)</span>
+
+            <span class="c1"># Save the token to the ~/.zenodo</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">sandbox</span><span class="p">:</span>
+                <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sanbox.zenodo.org&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lightForm&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">config</span><span class="p">[</span><span class="s1">&#39;zenodo.org&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lightForm&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tokenfile</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
+                <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+            <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
+            <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="p">[</span><span class="n">fname</span><span class="p">],</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+        <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
+    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s1">&#39;Error: path </span><span class="si">{}</span><span class="s1"> for text files &#39;</span> \
+                <span class="s1">&#39;not found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+    <span class="n">datarepo</span> <span class="o">=</span> <span class="n">DataRepo</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">sandbox</span><span class="o">=</span><span class="n">sandbox</span><span class="p">)</span>
+    <span class="n">datarepo</span><span class="o">.</span><span class="n">get_deposition_id</span><span class="p">()</span>
+    <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span></div>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Finished &quot;</span> <span class="o">+</span> <span class="n">logger</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+      
+  </div>
+</div>
+  </body>
+</html>
