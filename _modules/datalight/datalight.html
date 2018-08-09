@@ -8,7 +8,7 @@
     <title>datalight.datalight &#8212; LightForm Data Uploader to Zenodo repositoryv0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -58,12 +58,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../../source/scope.html">Scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/acronyms.html">Acronyms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/prerequisites.html">Pre-requisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/howto.html">How-To</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/develop.html">Informations for developers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">datalight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/uml.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/markdown.html">A very simple markdown document</a></li>
 </ul>
 </ul>
 </li>
@@ -114,10 +114,9 @@
 <span class="sd">:Copyright: IT Services, The University of Mancheste</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
-<span class="kn">import</span> <span class="nn">sys</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">import</span> <span class="nn">configparser</span>
-<span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">configparser</span>  <span class="c1"># read the ini file containing zenodo information (token)</span>
 
 <span class="c1"># To get the home directory</span>
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="k">import</span> <span class="n">Path</span>
@@ -142,10 +141,11 @@
 
 <span class="sd">    Command line::</span>
 
-<span class="sd">        Usage: datalight [-h | --help] &lt;files&gt;... --metadata=&lt;metadata&gt; [options]</span>
+<span class="sd">        Usage: datalight [-h | --help] &lt;files&gt;... (-m &lt;metadata&gt; | --metadata=&lt;metadata&gt;) [options]</span>
 
 <span class="sd">        Options:</span>
 
+<span class="sd">        -m metadata               File which contains the metadata information</span>
 <span class="sd">        --metadata=&lt;metadata&gt;     File which contains the metadata information</span>
 <span class="sd">        --repository=&lt;repository&gt; Name of a data repository [default: zenodo].</span>
 <span class="sd">        --sandbox=&lt;sandbox&gt;]</span>
@@ -155,6 +155,7 @@
 <span class="sd">        Examples:</span>
 <span class="sd">            datalight file1 file2</span>
 <span class="sd">            datalight directory --metadata=metadata.yml --repository=zenodo</span>
+<span class="sd">            datalight file -m metadata.yml</span>
 
 <span class="sd">    Raises</span>
 <span class="sd">    ------</span>
@@ -168,7 +169,10 @@
     <span class="c1"># Convert docopt results in the proper variable (change type when needed)</span>
 
     <span class="n">fname</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;&lt;files&gt;&#39;</span><span class="p">]</span>
-    <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;-m&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;-m&#39;</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span>
     <span class="n">repository</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--repository&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">repository</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -178,7 +182,13 @@
 
     <span class="c1"># Read metadata from file</span>
     <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">metadata</span><span class="p">))}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">ruamel.yaml</span> <span class="k">import</span> <span class="n">YAML</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">YAML</span><span class="p">(</span><span class="n">typ</span><span class="o">=</span><span class="s2">&quot;safe&quot;</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)}</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">yaml</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)}</span>
 
     <span class="k">if</span> <span class="n">repository</span> <span class="o">==</span> <span class="s1">&#39;zenodo&#39;</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -208,7 +218,7 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">config</span><span class="p">[</span><span class="s1">&#39;zenodo.org&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lightForm&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
 
-            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tokenfile</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tokenfile</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
                 <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span>
 
     <span class="k">try</span><span class="p">:</span>
@@ -216,7 +226,7 @@
             <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
             <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="p">[</span><span class="n">fname</span><span class="p">],</span> <span class="s1">&#39;&#39;</span>
+            <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
     <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
         <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
     <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
@@ -229,8 +239,8 @@
     <span class="n">datarepo</span><span class="o">.</span><span class="n">get_deposition_id</span><span class="p">()</span>
     <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
-        <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span></div>
-    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Finished &quot;</span> <span class="o">+</span> <span class="n">logger</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Finished &quot;</span> <span class="o">+</span> <span class="n">logger</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 
 
 <span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>

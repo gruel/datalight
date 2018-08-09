@@ -8,7 +8,7 @@
     <title>datalight.zenodo &#8212; LightForm Data Uploader to Zenodo repositoryv0.1 documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
@@ -58,12 +58,12 @@
 <li class="toctree-l1"><a class="reference internal" href="../../source/scope.html">Scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/acronyms.html">Acronyms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../source/prerequisites.html">Pre-requisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/howto.html">How-To</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/develop.html">Informations for developers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/modules.html">datalight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../source/uml.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../source/markdown.html">A very simple markdown document</a></li>
 </ul>
 </ul>
 </li>
@@ -108,7 +108,7 @@
 <span></span><span class="ch">#!/usr/bin/env python</span>
 
 <span class="sd">&quot;&quot;&quot;This module is implementing high level function to upload</span>
-<span class="sd">and download Lightform data.</span>
+<span class="sd">and download data on Zenodo.</span>
 
 <span class="sd">:Authors: Nicolas Gruel &lt;nicolas.gruel@manchester.ac.uk&gt;</span>
 
@@ -124,14 +124,14 @@
     <span class="kn">from</span> <span class="nn">conf</span> <span class="k">import</span> <span class="n">logger</span>
 
 <span class="kn">import</span> <span class="nn">requests</span>
-<span class="c1"># import configparser</span>
+<span class="kn">import</span> <span class="nn">configparser</span>
 <span class="kn">import</span> <span class="nn">json</span>
 
 
 <div class="viewcode-block" id="ZenodoException"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.ZenodoException">[docs]</a><span class="k">class</span> <span class="nc">ZenodoException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Class for exception</span>
-<span class="sd">        &quot;&quot;&quot;</span></div>
-    <span class="k">pass</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
 
 
 <div class="viewcode-block" id="Zenodo"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo">[docs]</a><span class="k">class</span> <span class="nc">Zenodo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -164,9 +164,6 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="kc">None</span>
 
-<div class="viewcode-block" id="Zenodo.get_token"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.get_token">[docs]</a>    <span class="k">def</span> <span class="nf">get_token</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tokenfile</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span></div>
-        <span class="k">pass</span>
-
     <span class="k">def</span> <span class="nf">_verify_token</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Function to test if token could be valid</span>
 
@@ -181,7 +178,8 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_check_status_code</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">status_code</span><span class="p">):</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_status_code</span><span class="p">(</span><span class="n">status_code</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to test that the request went as expected.</span>
 
 <span class="sd">        Parameters</span>
@@ -208,8 +206,7 @@
             <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Server connection failed &#39;</span> \
                       <span class="s1">&#39;with error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">status_code</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-            <span class="c1">#raise ZenodoException(message) # Break the test....</span>
-            <span class="k">return</span> <span class="n">status_code</span>
+            <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Request failed &#39;</span> \
@@ -223,8 +220,8 @@
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
 <span class="sd">        ZenodoException</span>
-<span class="sd">            if token not define (token = None) or</span>
-<span class="sd">            if connection return status &gt;= 400</span>
+<span class="sd">            raise if token not define (token = None) or if connection</span>
+<span class="sd">            return status &gt;= 400</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Test if Token defined and access zenodo to test the token if exist</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_token</span><span class="p">()</span>
@@ -239,16 +236,14 @@
             <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Access token not accepted by Zenodo. &#39;</span> \
                       <span class="s1">&#39;Error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="kc">None</span></div>
-            <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Zenodo.get_deposition_id"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.get_deposition_id">[docs]</a>    <span class="k">def</span> <span class="nf">get_deposition_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to obtain the deposition id need to upload documents to Zenodo</span>
 
 <span class="sd">        Attributes</span>
 <span class="sd">        ----------</span>
-<span class="sd">        request:</span>
-
 <span class="sd">        deposition_id: int</span>
 <span class="sd">            Deposition id gave by Zenodo deposition api to be used to upload</span>
 <span class="sd">            files and metadata.</span>
@@ -256,8 +251,8 @@
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
 <span class="sd">        ZenodoException</span>
-<span class="sd">            if token not define (token = None) or</span>
-<span class="sd">            if connection return status &gt;= 400</span>
+<span class="sd">            raise if token not define (token = None) or if connection</span>
+<span class="sd">            return status &gt;= 400</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">:</span> <span class="s1">&#39;application/json&#39;</span><span class="p">}</span>
 
@@ -280,8 +275,8 @@
             <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">json</span><span class="p">()[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deposition id: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span></div>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deposition url: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deposition id: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deposition url: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="Zenodo.delete"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to delete deposition.</span>
@@ -291,8 +286,8 @@
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
 <span class="sd">        ZenodoException</span>
-<span class="sd">            if token not define (token = None) or</span>
-<span class="sd">            if connection return status &gt;= 400</span>
+<span class="sd">            raise if token not define (token = None) or if connection</span>
+<span class="sd">            return status &gt;= 400</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Test if token was defined</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_token</span><span class="p">()</span>
@@ -316,8 +311,8 @@
         <span class="k">except</span> <span class="n">ZenodoException</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Request_url does not exist or bad token. &#39;</span> \
                       <span class="s1">&#39;Error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
-            <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
 
 <span class="c1">#        self._check_status_code(self.status_code)</span>
 
@@ -336,8 +331,8 @@
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
 <span class="sd">        ZenodoException</span>
-<span class="sd">            if token not define (token = None) or</span>
-<span class="sd">            if connection return status &gt;= 400</span>
+<span class="sd">            raise if token not define (token = None) or if connection</span>
+<span class="sd">            return status &gt;= 400</span>
 <span class="sd">        &quot;&quot;&quot;</span>
 
         <span class="c1"># Test if token was defined</span>
@@ -383,13 +378,14 @@
             <span class="n">status_code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_check_status_code</span><span class="p">(</span><span class="n">request</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">status_code</span><span class="p">)</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_check_status_code</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">status_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_status_code</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Zenodo.upload_metadata"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.upload_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">upload_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Upload metadata to Zenodo repository.</span>
 
-<span class="sd">        After creating the</span>
+<span class="sd">        After creating the request and upload the file(s) we need to update</span>
+<span class="sd">        the metadata needed by Zenodo related to the record.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -402,6 +398,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_token</span><span class="p">()</span>
 
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;metadata:&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
         <span class="c1"># Todo replace by test of zenodometadata</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="s1">&#39;metadata&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="s1">&#39;Metadata should be &#39;</span>
@@ -420,8 +417,8 @@
                                <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metadata</span><span class="p">),</span>
                                <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">status_code</span></div>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_check_status_code</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_status_code</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Zenodo.publish"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.publish">[docs]</a>    <span class="k">def</span> <span class="nf">publish</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method which will publish the deposition linked with the id.</span>
@@ -433,8 +430,8 @@
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
 <span class="sd">        ZenodoException</span>
-<span class="sd">            if token not define (token = None) or</span>
-<span class="sd">            if connection return status &gt;= 400</span>
+<span class="sd">            raise if token not define (token = None) or if connection</span>
+<span class="sd">            return status &gt;= 400</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Test if token was defined</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_token</span><span class="p">()</span>
@@ -445,38 +442,26 @@
                                 <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;access_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">})</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">status_code</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_check_status_code</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
 
         <span class="c1"># Test that everything went as expected</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">==</span> <span class="mi">202</span><span class="p">:</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deposition id: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Status code: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
-            <span class="k">return</span>
+            <span class="k">return</span></div>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">500</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Server connection failed &#39;</span> \
-                      <span class="s1">&#39;with error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-            <span class="c1">#raise ZenodoException(message) # Break the test....</span>
-            <span class="k">return</span>
+        <span class="c1">#self._check_status_code(self.status_code)</span>
 
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Publish file failed &#39;</span> \
-                      <span class="s1">&#39;with error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span></div>
-            <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<div class="viewcode-block" id="Zenodo.download_files"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.download_files">[docs]</a>    <span class="k">def</span> <span class="nf">download_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to download file present in a specific record</span>
 
-<div class="viewcode-block" id="Zenodo.download_file"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.download_file">[docs]</a>    <span class="k">def</span> <span class="nf">download_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="sd">        &quot;&quot;&quot;</span></div>
-        <span class="k">raise</span> <span class="s2">&quot;Not implemented&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="s2">&quot;Not implemented&quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="Zenodo.metadata_verify"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.metadata_verify">[docs]</a>    <span class="k">def</span> <span class="nf">metadata_verify</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-
-
-<span class="sd">        &quot;&quot;&quot;</span></div></div>
-        <span class="k">raise</span> <span class="s2">&quot;Not implemented&quot;</span>
+        <span class="sd">&quot;&quot;&quot;If implemented will be wrapper around the ZenodoMetadata class</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="s2">&quot;Not implemented&quot;</span><span class="p">)</span></div></div>
 </pre></div>
 
     </div>

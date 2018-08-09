@@ -9,7 +9,7 @@
     <title>Index &#8212; LightForm Data Uploader to Zenodo repositoryv0.1 documentation</title>
     <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
@@ -59,12 +59,12 @@
 <li class="toctree-l1"><a class="reference internal" href="source/scope.html">Scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/acronyms.html">Acronyms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="source/prerequisites.html">Pre-requisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/howto.html">How-To</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/develop.html">Informations for developers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/modules.html">datalight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="source/uml.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="source/markdown.html">A very simple markdown document</a></li>
 </ul>
 </ul>
 </li>
@@ -115,19 +115,15 @@
  | <a href="#G"><strong>G</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
- | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
  | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
  | <a href="#Z"><strong>Z</strong></a>
  
 </div>
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/datalight.html#datalight.zenodo_metadata.ZenodoMetadata.check_minimal_metadata">check_minimal_metadata() (datalight.zenodo_metadata.ZenodoMetadata method)</a>
-</li>
-  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/datalight.html#datalight.zenodo.Zenodo.connection">connection() (datalight.zenodo.Zenodo method)</a>
 </li>
@@ -153,7 +149,7 @@
 </li>
       <li><a href="source/datalight.html#datalight.zenodo.Zenodo.deposition_id">deposition_id (datalight.zenodo.Zenodo attribute)</a>
 </li>
-      <li><a href="source/datalight.html#datalight.zenodo.Zenodo.download_file">download_file() (datalight.zenodo.Zenodo method)</a>
+      <li><a href="source/datalight.html#datalight.zenodo.Zenodo.download_files">download_files() (datalight.zenodo.Zenodo method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -172,10 +168,6 @@
       <li><a href="source/datalight.html#datalight.zenodo.Zenodo.get_deposition_id">get_deposition_id() (datalight.zenodo.Zenodo method)</a>
 </li>
   </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/datalight.html#datalight.zenodo.Zenodo.get_token">get_token() (datalight.zenodo.Zenodo method)</a>
-</li>
-  </ul></td>
 </tr></table>
 
 <h2 id="M">M</h2>
@@ -186,8 +178,6 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/datalight.html#datalight.zenodo.Zenodo.metadata_verify">metadata_verify() (datalight.zenodo.Zenodo method)</a>
-</li>
-      <li><a href="source/datalight.html#datalight.zenodo_metadata.ZenodoMetadata.modify_metadata">modify_metadata() (datalight.zenodo_metadata.ZenodoMetadata method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -200,18 +190,16 @@
   </ul></td>
 </tr></table>
 
-<h2 id="R">R</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="source/datalight.html#datalight.zenodo.Zenodo.request">request (datalight.zenodo.Zenodo attribute)</a>
-</li>
-  </ul></td>
-</tr></table>
-
 <h2 id="S">S</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/datalight.html#datalight.zenodo.Zenodo.sandbox_token">sandbox_token (datalight.zenodo.Zenodo attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/datalight.html#datalight.zenodo_metadata.ZenodoMetadata.set_metadata">set_metadata() (datalight.zenodo_metadata.ZenodoMetadata method)</a>
+</li>
+      <li><a href="source/datalight.html#datalight.zenodo_metadata.ZenodoMetadata.set_schema">set_schema() (datalight.zenodo_metadata.ZenodoMetadata method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -236,12 +224,20 @@
   </ul></td>
 </tr></table>
 
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="source/datalight.html#datalight.zenodo_metadata.ZenodoMetadata.validate">validate() (datalight.zenodo_metadata.ZenodoMetadata method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="Z">Z</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/datalight.html#datalight.zenodo.Zenodo">Zenodo (class in datalight.zenodo)</a>
 </li>
-      <li><a href="source/datalight.html#datalight.zenodo.ZenodoException">ZenodoException</a>, <a href="source/datalight.html#datalight.zenodo_metadata.ZenodoException">[1]</a>
+      <li><a href="source/datalight.html#datalight.zenodo.ZenodoException">ZenodoException</a>
 
       <ul>
         <li><a href="source/datalight.html#datalight.zenodo.Zenodo.ZenodoException">(datalight.zenodo.Zenodo attribute)</a>
@@ -250,6 +246,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="source/datalight.html#datalight.zenodo_metadata.ZenodoMetadata">ZenodoMetadata (class in datalight.zenodo_metadata)</a>
+</li>
+      <li><a href="source/datalight.html#datalight.zenodo_metadata.ZenodoMetadataException">ZenodoMetadataException</a>
 </li>
   </ul></td>
 </tr></table>

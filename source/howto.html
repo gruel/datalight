@@ -8,7 +8,7 @@
     <title>How-To &#8212; LightForm Data Uploader to Zenodo repositoryv0.1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -60,12 +60,12 @@
 <li class="toctree-l1"><a class="reference internal" href="scope.html">Scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acronyms.html">Acronyms</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Pre-requisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">How-To</a></li>
 <li class="toctree-l1"><a class="reference internal" href="develop.html">Informations for developers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">datalight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="uml.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">A very simple markdown document</a></li>
 </ul>
 </ul>
 </li>
@@ -96,8 +96,22 @@
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
 <li><a class="reference internal" href="#">How-To</a><ul>
-<li><a class="reference internal" href="#usage">Usage</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#usage">Usage</a><ul>
+<li><a class="reference internal" href="#zenodo-metadata">Zenodo Metadata</a></li>
+<li><a class="reference internal" href="#yaml-format">YAML Format</a><ul>
+<li><a class="reference internal" href="#basics">Basics</a></li>
+<li><a class="reference internal" href="#comments">Comments</a></li>
+<li><a class="reference internal" href="#key-value-pairs">Key-value pairs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#zenodo-metadata-examples">Zenodo metadata examples</a><ul>
+<li><a class="reference internal" href="#minimal">Minimal</a></li>
+<li><a class="reference internal" href="#a-more-complete-realistic-one">A more complete (realistic) one</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#datalight-usage">Datalight usage</a></li>
 </ul>
 </li>
 </ul>
@@ -129,11 +143,297 @@
 <span id="howto"></span><h1>How-To<a class="headerlink" href="#how-to" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>Describe usage of the software</p>
+<p>Before to use the software it is needed to create the file which will be use to fill the necessary metadata needed by the data repository to create the data record.</p>
+<div class="section" id="zenodo-metadata">
+<h3>Zenodo Metadata<a class="headerlink" href="#zenodo-metadata" title="Permalink to this headline">¶</a></h3>
+<p>Zenodo data repository is asking for a very specific informations which should be included in <strong>every</strong> data record.</p>
+<p>Zenodo metadata which should <strong>always</strong> be include in any metadata are:</p>
+<ul class="simple">
+<li>title</li>
+<li>description</li>
+<li>upload_type</li>
+<li>creators</li>
+<li>[access_right] (optional, default: open)</li>
+<li>[license] (optional, default: cc-by-0])</li>
+</ul>
+<p>some additional values can be needed depending on the values of
+the <em>upload_type</em> and <em>access_right</em>.</p>
+<p>If:</p>
+<ul class="simple">
+<li><em>upload_type</em> is equal to <em>publication</em> implied the presence of
+<em>publication_type</em> metadata keyword.</li>
+<li><em>upload_type</em> is equal to <em>image</em> implied the presence of the keyword
+<em>image_type</em></li>
+<li><em>access_right</em> is not present or equal to <em>open</em> (default value),
+it implied the presence of <em>license</em> keyword if not <em>license</em> will be:
+<em>cc-by-4.0</em></li>
+<li><em>access_right</em> is equal to <em>embargoed</em> implied the presence of <em>license</em>
+(or <em>license</em> will be set to <em>cc-by-4.0</em>) and <em>embargo_date</em> keywords</li>
+<li><em>access_right</em> is equal to <em>restricted</em> implied the presence
+of <em>access_conditions</em> keyword</li>
+</ul>
+<p><a class="reference external" href="http://developers.zenodo.org/#representation">Zenodo API</a> documentation
+present all the different metadata keywords accepted by it.
+In any doubt this is <strong>the</strong> reference page.</p>
+<p>Until Zenodo is providing their own schema there are no
+possibility to be sure that the schema is up-to-date. Datalight developer will
+try to keep up-to-date and be sure that any change in the Zenodo API will be
+reflected in the yaml schema.</p>
+<p>The associated informations to the records has to be provided
+in a text file following the <a href="#id1"><span class="problematic" id="id2">`YAML format&lt;http://yaml.org/&gt;`_</span></a>.</p>
+<p>We decided to use YAML format because it is easier for humans
+to read and write than other metadata formats like XML or JSON.</p>
+<p>This format is describe in the following paragraph.</p>
 </div>
-<div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>Example how to use the software</p>
+<div class="section" id="yaml-format">
+<h3><a class="reference external" href="http://yaml.org">YAML</a> Format<a class="headerlink" href="#yaml-format" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="basics">
+<h4>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h4>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Using a WYSIWYG (Microsoft Word) to create or edit a YAML file is not advised.</p>
+</div>
+<p>YAML files can <em>optionally</em> begin with <cite>—</cite> and end with <cite>…</cite>
+That indicates the start and end of a document.</p>
+</div>
+<div class="section" id="comments">
+<h4>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h4>
+<p>It is possible to add comments in a yaml file. The character used
+to declare that everything after that character is considered as
+comment is <strong>#</strong> (similar to python):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a comment in yaml</span>
+<span class="l l-Scalar l-Scalar-Plain">title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">a title</span> <span class="c1"># &lt;- The line read up to this character.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="key-value-pairs">
+<h4>Key-value pairs<a class="headerlink" href="#key-value-pairs" title="Permalink to this headline">¶</a></h4>
+<p>YAML keep informations using a key which is associated to a value (it is a called hashtable or in python dictionary):</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">A title for our data</span>
+</pre></div>
+</div>
+<p>A string can be extended on multiple lines by three differents way:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span> <span class="p p-Indicator">:</span> <span class="s">&quot;A</span><span class="nv"> </span><span class="s">title</span><span class="nv"> </span><span class="s">for</span><span class="nv"> </span><span class="s">our</span><span class="nv"> </span><span class="s">data</span>
+        <span class="s">which</span><span class="nv"> </span><span class="s">extend</span><span class="nv"> </span><span class="s">on</span><span class="nv"> </span><span class="s">multiple</span><span class="nv"> </span><span class="s">lines</span><span class="nv"> </span><span class="s">using</span><span class="nv"> </span><span class="s">quote&quot;</span>
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span> <span class="p p-Indicator">:</span> <span class="p p-Indicator">|</span>
+        <span class="no">A title for our data</span>
+        <span class="no">which extend on multiple lines &quot;Literal Block Scalar&quot; |</span>
+        <span class="no">will include the newlines and any trailing spaces.</span>
+</pre></div>
+</div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span> <span class="p p-Indicator">:</span> <span class="p p-Indicator">&gt;</span>
+        <span class="no">A title for our data</span>
+        <span class="no">which extend on multiple lines &quot;Literal Block Scalar&quot; &gt;</span>
+        <span class="no">will fold newlines to spaces; it’s used to make what would</span>
+        <span class="no">otherwise be a very long line easier to read and edit.</span>
+</pre></div>
+</div>
+<p>In either case the indentation will be ignored.</p>
+<p>Value can be more complex than just a string but list or combinaison of list and key-pair values. YAML will consider that lines prefixed with more spaces than the parent key are contained inside it; Moreover, all lines must be prefixed with the same amount of spaces to belong to the same map</p>
+<p>We are going to see some examples to understand what it means in the context of datalight metadata.</p>
+<p>A list in YAML where the key has the name <em>alist</em> and the value is a list of three elements:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">alist</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">first element</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">second element.</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">third element</span>
+</pre></div>
+</div>
+<p>For datalight we can use it to list, for example, the <em>creators</em> of the data:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Alan Smith</span>
+</pre></div>
+</div>
+<p>The value associated to a key can be a list but also another hashtable to add more informations. Here an example where we are providing the name for every creators but also the affiliation:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+    <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Neverland</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Alan Smith</span>
+    <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Shire</span>
+</pre></div>
+</div>
+<p>Every element of the list will have two informations (name and affiliation).</p>
+<p>This is the description of the YAML format needed to create a metadata file to upload on our favorite data repository.</p>
+<p>In the following section, we are going to see different examples of valide metadata for Zenodo repository.</p>
+</div>
+</div>
+<div class="section" id="zenodo-metadata-examples">
+<h3>Zenodo metadata examples<a class="headerlink" href="#zenodo-metadata-examples" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="minimal">
+<h4>Minimal<a class="headerlink" href="#minimal" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">A small title describing our data</span>
+
+<span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;Description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">dataset</span><span class="nv"> </span><span class="s">that</span>
+              <span class="s">is</span><span class="nv"> </span><span class="s">going</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">upload&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">upload_type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dataset</span>
+
+<span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+    <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Neverland</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Alan Smith</span>
+    <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Shire</span>
+</pre></div>
+</div>
+<p>This metadata will be sufficient to upload successfully a dataset on Zenodo.</p>
+<p>Zenodo will add the following one which will have their default value:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">access_right</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">open</span>
+<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cc-by-4.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="a-more-complete-realistic-one">
+<h4>A more complete (realistic) one<a class="headerlink" href="#a-more-complete-realistic-one" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span><span class="p p-Indicator">:</span> <span class="s">&quot;A</span><span class="nv"> </span><span class="s">very</span><span class="nv"> </span><span class="s">long</span>
+       <span class="s">title&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;Description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">data&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">John Doe</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Neverland</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Shire</span>
+      <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0007</span>
+
+<span class="l l-Scalar l-Scalar-Plain">upload_type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dataset</span>
+
+<span class="l l-Scalar l-Scalar-Plain">access_right</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restricted</span>
+
+<span class="l l-Scalar l-Scalar-Plain">access_conditions</span><span class="p p-Indicator">:</span> <span class="s">&quot;Only</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">through</span><span class="nv"> </span><span class="s">contact</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">lightform</span><span class="nv"> </span><span class="s">project&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">communities</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">identifier</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mycommunity</span>
+
+<span class="l l-Scalar l-Scalar-Plain">thesis_supervisors</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Shire</span>
+      <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0007</span>
+
+<span class="l l-Scalar l-Scalar-Plain">contributors</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Alan Smith</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Mars</span>
+      <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0005</span>
+      <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ContactPerson</span>
+
+<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cc-by-4.0</span>
+
+<span class="l l-Scalar l-Scalar-Plain">keywords</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MyProject</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">another_keyword</span>
+
+<span class="l l-Scalar l-Scalar-Plain">notes</span><span class="p p-Indicator">:</span> <span class="s">&quot;If</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">reconize</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">OpenAir</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">where</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">indicate</span>
+       <span class="s">the</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">related</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">(as</span><span class="nv"> </span><span class="s">mention</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Zenodo</span><span class="nv"> </span><span class="s">documentation).&quot;</span>
+
+<span class="c1"># If project known in the OpenAir</span>
+<span class="c1">#grants:</span>
+<span class="c1">#    id:</span>
+
+<span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">eng</span>
+
+<span class="l l-Scalar l-Scalar-Plain">subjects</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">term</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Fantasy and SF</span>
+      <span class="l l-Scalar l-Scalar-Plain">identifier</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://id.loc.gov/authorities/subjects/sh000000</span>
+      <span class="l l-Scalar l-Scalar-Plain">scheme</span><span class="p p-Indicator">:</span> <span class="s">&quot;url&quot;</span>
+</pre></div>
+</div>
+<p>or one where data are emboargoed until a certain date:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span><span class="p p-Indicator">:</span> <span class="s">&quot;A</span><span class="nv"> </span><span class="s">very</span><span class="nv"> </span><span class="s">long</span>
+       <span class="s">title&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;Description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">data&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">John Doe</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Neverland</span>
+
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Shire</span>
+      <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0007</span>
+
+<span class="l l-Scalar l-Scalar-Plain">upload_type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dataset</span>
+
+<span class="l l-Scalar l-Scalar-Plain">access_right</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">embargoed</span>
+
+<span class="l l-Scalar l-Scalar-Plain">embargo_date</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">2022-12-31</span>
+
+<span class="l l-Scalar l-Scalar-Plain">communities</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">identifier</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mycommunity</span>
+
+<span class="l l-Scalar l-Scalar-Plain">thesis_supervisors</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Shire</span>
+      <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0007</span>
+
+<span class="l l-Scalar l-Scalar-Plain">contributors</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Alan Smith</span>
+      <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">The University of Mars</span>
+      <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0005</span>
+      <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ContactPerson</span>
+
+<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cc-by-4.0</span>
+
+<span class="l l-Scalar l-Scalar-Plain">keywords</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MyProject</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">another_keyword</span>
+
+<span class="l l-Scalar l-Scalar-Plain">notes</span><span class="p p-Indicator">:</span> <span class="s">&quot;If</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">reconize</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">OpenAir</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">where</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">indicate</span>
+       <span class="s">the</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">related</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">(as</span><span class="nv"> </span><span class="s">mention</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Zenodo</span><span class="nv"> </span><span class="s">documentation).&quot;</span>
+
+<span class="c1"># If project known in the OpenAir</span>
+<span class="c1">#grants:</span>
+<span class="c1">#    id:</span>
+
+<span class="l l-Scalar l-Scalar-Plain">language</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">eng</span>
+
+<span class="l l-Scalar l-Scalar-Plain">subjects</span><span class="p p-Indicator">:</span>
+    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">term</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Fantasy and SF</span>
+      <span class="l l-Scalar l-Scalar-Plain">identifier</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">http://id.loc.gov/authorities/subjects/sh000000</span>
+      <span class="l l-Scalar l-Scalar-Plain">scheme</span><span class="p p-Indicator">:</span> <span class="s">&quot;url&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="datalight-usage">
+<h2>Datalight usage<a class="headerlink" href="#datalight-usage" title="Permalink to this headline">¶</a></h2>
+<p>When you have a file(s)/directory containing your data and a proper metadata file
+associated, you can upload your data to Zenodo data repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ datalight file1 --metadata<span class="o">=</span>&lt;name of the file which contains zenodo metadata&gt;
+$ datafile file1 file2 --metadata<span class="o">=</span>&lt;name of the file which contains zenodo metadata&gt;
+$ datafile directory --metadata<span class="o">=</span>&lt;name of the file which contains zenodo metadata&gt;
+</pre></div>
+</div>
+<p>The <strong>–metadata</strong> argument should point to the file which contains the Zenodo metadata as describe above.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><strong>–metadata</strong> argument is <strong>not optional</strong>. It has to be provided.</p>
+</div>
+<p>You can add as many argument as you want and they should be the name of file or the name of a directory which contains the data you want to upload to the data repository.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ datalight metadata.yaml --metadata=metadata.yaml
+</pre></div>
+</div>
+<p>Where <em>metadata.yaml</em> will contains the following values:</p>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">A small title describing our data</span>
+
+<span class="l l-Scalar l-Scalar-Plain">description</span><span class="p p-Indicator">:</span> <span class="s">&quot;Description</span><span class="nv"> </span><span class="s">of</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">dataset</span><span class="nv"> </span><span class="s">that</span>
+              <span class="s">is</span><span class="nv"> </span><span class="s">going</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">be</span><span class="nv"> </span><span class="s">upload&quot;</span>
+
+<span class="l l-Scalar l-Scalar-Plain">upload_type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">dataset</span>
+
+<span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
+
+  <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Alan Smith</span>
+    <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Shire</span>
+</pre></div>
+</div>
+<p>In this example, the file containing the metadata will be upload as a data file and store on Zenodo.</p>
 </div>
 </div>
 

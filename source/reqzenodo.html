@@ -1,0 +1,198 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Account Creation &#8212; LightForm Data Uploader to Zenodo repositoryv0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="prev" title="Pre-requisites" href="prerequisites.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../index.html"><span><img src="../_static/logo.svg"></span>
+           </a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="../index.html">LightForm Data Uploader to Zenodo repository <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../management/approvals.html">Approval Control</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../management/changes.html">Change Records</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scope.html">Scope</a></li>
+<li class="toctree-l1"><a class="reference internal" href="acronyms.html">Acronyms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="prerequisites.html">Pre-requisites</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="howto.html">How-To</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Informations for developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">datalight</a></li>
+<li class="toctree-l1"><a class="reference internal" href="uml.html">Architecture</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+            
+            
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+      <div class="col-md-3">
+        <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
+<li><a class="reference internal" href="#">Account Creation</a></li>
+</ul>
+
+  <li>
+    <a href="prerequisites.html" title="Previous Chapter: Pre-requisites"><span class="glyphicon glyphicon-chevron-left visible-sm"></span><span class="hidden-sm hidden-tablet">&laquo; Pre-requisites</span>
+    </a>
+  </li>
+  <li>
+    <a href="installation.html" title="Next Chapter: Installation"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Installation &raquo;</span>
+    </a>
+  </li>
+<div id="sourcelink">
+  <a href="../_sources/source/reqzenodo.rst.txt"
+     rel="nofollow">Source</a>
+</div>
+<form action="../search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+        </div>
+      </div>
+    <div class="col-md-9 content">
+      
+  <p id="reqzenodo">The first step to upload or search data related to a specific
+communities on Zenodo is to create an account on the plateform. This
+step does not depend on the application use to realise these
+operations.</p>
+<p>It is free to create an account and that will allows researcher to
+link their <a class="reference external" href="https://orcid.org/">ORCID</a> accout with the Zenodo’s if
+needed.</p>
+<div class="section" id="account-creation">
+<h1>Account Creation<a class="headerlink" href="#account-creation" title="Permalink to this headline">¶</a></h1>
+<p>Open your browser and go to <a class="reference external" href="https://zenodo.org">zenodo webpage</a>:</p>
+<a class="reference internal image-reference" href="../_images/zenodo-homepage.png"><img alt="../_images/zenodo-homepage.png" class="align-center" src="../_images/zenodo-homepage.png" style="width: 90%;" /></a>
+<p>If you do not already have a Zenodo account click on the <strong>sign up</strong>
+button:</p>
+<a class="reference internal image-reference" href="../_images/zenodo-signup.png"><img alt="../_images/zenodo-signup.png" class="align-center" src="../_images/zenodo-signup.png" style="width: 125.0px; height: 46.0px;" /></a>
+<p>It is possible to create a Zenodo account or to use your credential
+from <a class="reference external" href="https://github.com">Github</a> or <a class="reference external" href="https://orcid.org/">ORCID</a>.</p>
+<a class="reference internal image-reference" href="../_images/zenodo-signup2.png"><img alt="../_images/zenodo-signup2.png" class="align-center" src="../_images/zenodo-signup2.png" style="width: 90%;" /></a>
+<p>When it is done or if you already have a Zenodo account, you can login
+on it by clicking on the <strong>login</strong> button:</p>
+<a class="reference internal image-reference" href="../_images/zenodo-login.png"><img alt="../_images/zenodo-login.png" class="align-center" src="../_images/zenodo-login.png" style="width: 126.0px; height: 53.0px;" /></a>
+<p>That will let you arrive to the following page where you will fill
+your credential to access the website:</p>
+<a class="reference internal image-reference" href="../_images/zenodo-login2.png"><img alt="../_images/zenodo-login2.png" class="align-center" src="../_images/zenodo-login2.png" style="width: 60%;" /></a>
+<p>When it is done you have access to the full Zenodo capacity, that you
+can access next to your login name (red rectangle):</p>
+<a class="reference internal image-reference" href="../_images/zenodo-logon.png"><img alt="../_images/zenodo-logon.png" class="align-center" src="../_images/zenodo-logon.png" style="width: 90%;" /></a>
+<p>To be able to use <em>datalight</em> we need to create a personal token to
+access to it.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">The token will be personal and <strong>should</strong> not be shared with
+anybody. Data publish on Zenodo using that token are the
+responsability of the token owner.</p>
+</div>
+<p>The procedure to create the token is, click on the small arrow next to
+your login name (red square). A menu will open with different
+option. Click on the <strong>Applications</strong> (uderlied in red).</p>
+<a class="reference internal image-reference" href="../_images/zenodo-logon2.png"><img alt="../_images/zenodo-logon2.png" class="align-center" src="../_images/zenodo-logon2.png" style="width: 90%;" /></a>
+<p>That will open a new page were you can create a new token by clicking
+on the <strong>New token</strong> button (red square):</p>
+<a class="reference internal image-reference" href="../_images/zenodo-token1.png"><img alt="../_images/zenodo-token1.png" class="align-center" src="../_images/zenodo-token1.png" style="width: 90%;" /></a>
+<p>You have to give a name to the token (e.g. <em>ZenodoToken</em>), you can
+also choose which action can be done using that token:</p>
+<ul class="simple">
+<li><strong>deposit:action</strong> which allows the publication of the uploads</li>
+<li><strong>deposit:write</strong> which allows the uploads of metadata and files
+(but not the deposition)</li>
+<li><strong>user:email</strong> which allows in read-only mode the access to the
+uploaders email.</li>
+</ul>
+<p>To use <em>datalight</em> you need to have at least the option
+<strong>deposit:write* checked. The publication of the deposit could be done
+through the web interface or by using another token with the option
+**deposit:actions</strong> checked.</p>
+<a class="reference internal image-reference" href="../_images/zenodo-token2.png"><img alt="../_images/zenodo-token2.png" class="align-center" src="../_images/zenodo-token2.png" style="width: 90%;" /></a>
+<p>By clicking the button <strong>Create</strong>, Zenodo will create a token which is
+an alphanumerical lists of characters:</p>
+<a class="reference internal image-reference" href="../_images/zenodo-token3.png"><img alt="../_images/zenodo-token3.png" class="align-center" src="../_images/zenodo-token3.png" style="width: 90%;" /></a>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This token will be given only <strong>one time</strong> so please copy it
+somewhere you can keep it. If you already have installed
+<em>datalight</em> you can provide the token the first time you are using it.
+This token will be saved in a read-only file in the user directory
+for future usage.</p>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+  </body>
+</html>

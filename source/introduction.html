@@ -8,7 +8,7 @@
     <title>Introduction &#8212; LightForm Data Uploader to Zenodo repositoryv0.1 documentation</title>
     <link rel="stylesheet" href="../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <script type="text/javascript" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
@@ -19,7 +19,7 @@
     <script type="text/javascript" src="../_static/bootstrap-sphinx.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Installation" href="installation.html" />
+    <link rel="next" title="Pre-requisites" href="prerequisites.html" />
     <link rel="prev" title="Acronyms" href="acronyms.html" />
 <meta charset='utf-8'>
 <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
@@ -60,12 +60,12 @@
 <li class="toctree-l1"><a class="reference internal" href="scope.html">Scope</a></li>
 <li class="toctree-l1"><a class="reference internal" href="acronyms.html">Acronyms</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prerequisites.html">Pre-requisites</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="howto.html">How-To</a></li>
 <li class="toctree-l1"><a class="reference internal" href="develop.html">Informations for developers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">datalight</a></li>
 <li class="toctree-l1"><a class="reference internal" href="uml.html">Architecture</a></li>
-<li class="toctree-l1"><a class="reference internal" href="markdown.html">A very simple markdown document</a></li>
 </ul>
 </ul>
 </li>
@@ -95,7 +95,11 @@
   <div class="row">
       <div class="col-md-3">
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
-<li><a class="reference internal" href="#">Introduction</a></li>
+<li><a class="reference internal" href="#">Introduction</a><ul>
+<li><a class="reference internal" href="#description">Description</a></li>
+<li><a class="reference internal" href="#funding">Funding</a></li>
+</ul>
+</li>
 </ul>
 
   <li>
@@ -103,7 +107,7 @@
     </a>
   </li>
   <li>
-    <a href="installation.html" title="Next Chapter: Installation"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Installation &raquo;</span>
+    <a href="prerequisites.html" title="Next Chapter: Pre-requisites"><span class="glyphicon glyphicon-chevron-right visible-sm"></span><span class="hidden-sm hidden-tablet">Pre-requisites &raquo;</span>
     </a>
   </li>
 <div id="sourcelink">
@@ -123,9 +127,15 @@
       
   <div class="section" id="introduction">
 <span id="id1"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>Description of the package</p>
-<p>Python version used</p>
-<p>Funding</p>
+<div class="section" id="description">
+<h2>Description<a class="headerlink" href="#description" title="Permalink to this headline">¶</a></h2>
+<p><em>Datalight</em> is a python software developed to help researcher in their data management and data curation by providing a simple tool to upload their important data on a data repository. For now, there are only one data repository available: <a class="reference external" href="https://zenodo.org">Zenodo</a>.</p>
+<p>This repository, before publishing the data, need some information related to them which has to be provided by the uploader. This informations are called metadata and will be provided through the usage of a <strong>YAML</strong> file. These informations are very specific and one of the role of the software is to validate the file structures to be sure that the upload will not failed because of an error inside it.</p>
+<p>The software is written in <a href="#id2"><span class="problematic" id="id3">`Python 3&lt;https://python.org&gt;`_</span></a>. It is multiplateform and should run without any problems (but bugs) on the main plateforms: Linux, MS Windows and MacOS X.</p>
+</div>
+<div class="section" id="funding">
+<h2>Funding<a class="headerlink" href="#funding" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
 
