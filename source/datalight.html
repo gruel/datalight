@@ -99,6 +99,7 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-datalight.conf">datalight.conf module</a></li>
 <li><a class="reference internal" href="#module-datalight.datalight">datalight.datalight module</a></li>
+<li><a class="reference internal" href="#module-datalight.datalight_old">datalight.datalight_old module</a></li>
 <li><a class="reference internal" href="#datalight-main-module">datalight.main module</a></li>
 <li><a class="reference internal" href="#module-datalight.zenodo">datalight.zenodo module</a></li>
 <li><a class="reference internal" href="#module-datalight.zenodo_metadata">datalight.zenodo_metadata module</a></li>
@@ -173,6 +174,54 @@
 
 <span class="o">-</span><span class="n">m</span> <span class="n">metadata</span>               <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
 <span class="o">--</span><span class="n">metadata</span><span class="o">=&lt;</span><span class="n">metadata</span><span class="o">&gt;</span>     <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
+<span class="o">-</span><span class="n">p</span>                        <span class="n">If</span> <span class="n">present</span> <span class="n">publish</span> <span class="n">the</span> <span class="n">data</span>
+<span class="o">--</span><span class="n">publish</span>                 <span class="n">If</span> <span class="n">present</span> <span class="n">publish</span> <span class="n">the</span> <span class="n">data</span>
+<span class="o">--</span><span class="n">repository</span><span class="o">=&lt;</span><span class="n">repository</span><span class="o">&gt;</span> <span class="n">Name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">repository</span> <span class="p">[</span><span class="n">default</span><span class="p">:</span> <span class="n">zenodo</span><span class="p">]</span>
+<span class="o">--</span><span class="n">sandbox</span>                 <span class="n">If</span> <span class="n">present</span><span class="p">,</span> <span class="n">datalight</span> <span class="n">will</span> <span class="n">use</span> <span class="n">the</span> <span class="n">sandbox</span> <span class="n">data</span> <span class="n">repository</span>
+<span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>                <span class="n">Print</span> <span class="n">this</span> <span class="n">help</span>
+<span class="o">--</span><span class="n">version</span>                 <span class="n">Print</span> <span class="n">version</span> <span class="n">of</span> <span class="n">the</span> <span class="n">software</span>
+
+<span class="n">Examples</span><span class="p">:</span>
+    <span class="n">datalight</span> <span class="n">file1</span> <span class="n">file2</span>
+    <span class="n">datalight</span> <span class="n">directory</span> <span class="o">--</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="o">.</span><span class="n">yml</span> <span class="o">--</span><span class="n">repository</span><span class="o">=</span><span class="n">zenodo</span>
+    <span class="n">datalight</span> <span class="n">file</span> <span class="o">-</span><span class="n">m</span> <span class="n">metadata</span><span class="o">.</span><span class="n">yml</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code> – if the file or the folder to treat is not available.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-datalight.datalight_old">
+<span id="datalight-datalight-old-module"></span><h2>datalight.datalight_old module<a class="headerlink" href="#module-datalight.datalight_old" title="Permalink to this headline">¶</a></h2>
+<p>Main module for datalight</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Nicolas Gruel &lt;<a class="reference external" href="mailto:nicolas&#46;gruel&#37;&#52;&#48;manchester&#46;ac&#46;uk">nicolas<span>&#46;</span>gruel<span>&#64;</span>manchester<span>&#46;</span>ac<span>&#46;</span>uk</a>&gt;</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">IT Services, The University of Mancheste</td>
+</tr>
+</tbody>
+</table>
+<dl class="function">
+<dt id="datalight.datalight_old.main">
+<code class="descclassname">datalight.datalight_old.</code><code class="descname">main</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight_old.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight_old.main" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run datalight scripts to upload file on data repository</p>
+<p>Command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usage</span><span class="p">:</span> <span class="n">datalight</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="o">--</span><span class="n">help</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">files</span><span class="o">&gt;...</span> <span class="p">(</span><span class="o">-</span><span class="n">m</span> <span class="o">&lt;</span><span class="n">metadata</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">--</span><span class="n">metadata</span><span class="o">=&lt;</span><span class="n">metadata</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
+
+<span class="n">Options</span><span class="p">:</span>
+
+<span class="o">-</span><span class="n">m</span> <span class="n">metadata</span>               <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
+<span class="o">--</span><span class="n">metadata</span><span class="o">=&lt;</span><span class="n">metadata</span><span class="o">&gt;</span>     <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
 <span class="o">--</span><span class="n">repository</span><span class="o">=&lt;</span><span class="n">repository</span><span class="o">&gt;</span> <span class="n">Name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">repository</span> <span class="p">[</span><span class="n">default</span><span class="p">:</span> <span class="n">zenodo</span><span class="p">]</span><span class="o">.</span>
 <span class="o">--</span><span class="n">sandbox</span><span class="o">=&lt;</span><span class="n">sandbox</span><span class="o">&gt;</span><span class="p">]</span>
 <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>                <span class="n">Print</span> <span class="n">this</span> <span class="n">help</span>
@@ -214,7 +263,7 @@ and download data on Zenodo.</p>
 </table>
 <dl class="class">
 <dt id="datalight.zenodo.Zenodo">
-<em class="property">class </em><code class="descclassname">datalight.zenodo.</code><code class="descname">Zenodo</code><span class="sig-paren">(</span><em>token</em>, <em>sandbox=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">datalight.zenodo.</code><code class="descname">Zenodo</code><span class="sig-paren">(</span><em>token</em>, <em>metadata=None</em>, <em>sandbox=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to upload and download files on Zenodo</p>
 <dl class="attribute">
@@ -225,23 +274,36 @@ The attribute is optional.</p>
 </dd></dl>
 
 <dl class="attribute">
-<dt id="datalight.zenodo.Zenodo.sandbox_token">
-<code class="descname">sandbox_token</code><a class="headerlink" href="#datalight.zenodo.Zenodo.sandbox_token" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str</em> – Token similar to the one above but to upload on the sandbox zone.
-Files uploaded</p>
+<dt id="datalight.zenodo.Zenodo.sandbox">
+<code class="descname">sandbox</code><a class="headerlink" href="#datalight.zenodo.Zenodo.sandbox" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>bool</em> – Default False, if True, the record is created on the Zenodo sandbox
+version which is provided for test purpose.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="datalight.zenodo.Zenodo.connection">
 <code class="descname">connection</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.connection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.connection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to test that connection with zenodo website is working.</p>
+<dd><p>Method to test that connection with Zenodo website is working.</p>
 </dd></dl>
 
 <dl class="method">
 <dt id="datalight.zenodo.Zenodo.delete">
-<code class="descname">delete</code><span class="sig-paren">(</span><em>id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.delete" title="Permalink to this definition">¶</a></dt>
+<code class="descname">delete</code><span class="sig-paren">(</span><em>_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.delete" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to delete deposition.</p>
-<p>note: it worked only if it is not publish.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_id</strong> (<em>int</em>) – deposition id of the record to delete</td>
+</tr>
+</tbody>
+</table>
+<p>:param .. note::: it worked only if it is not publish.
+:param Exception:
+:param ———:
+:param ZenodoException: raise if token not define (token = None) or if connection</p>
+<blockquote>
+<div>return status &gt;= 400</div></blockquote>
 </dd></dl>
 
 <dl class="method">
@@ -281,20 +343,31 @@ return status &gt;= 400</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="datalight.zenodo.Zenodo.metadata_verify">
-<code class="descname">metadata_verify</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.metadata_verify"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.metadata_verify" title="Permalink to this definition">¶</a></dt>
-<dd><p>If implemented will be wrapper around the ZenodoMetadata class</p>
-</dd></dl>
-
-<dl class="method">
 <dt id="datalight.zenodo.Zenodo.publish">
 <code class="descname">publish</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.publish"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.publish" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method which will publish the deposition linked with the id.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="datalight.zenodo.Zenodo.set_metadata">
+<code class="descname">set_metadata</code><span class="sig-paren">(</span><em>metadata=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.set_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.set_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to read and validate metadata.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>metadata</strong> – dictionary with one key ‘metadata’ associated to Zenodo metadata,
+ready to be use for uploading.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="datalight.zenodo.Zenodo.upload_files">
-<code class="descname">upload_files</code><span class="sig-paren">(</span><em>filenames</em>, <em>path=None</em>, <em>id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.upload_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.upload_files" title="Permalink to this definition">¶</a></dt>
+<code class="descname">upload_files</code><span class="sig-paren">(</span><em>filenames</em>, <em>path=None</em>, <em>_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.upload_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.upload_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to upload a file to Zenodo</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -303,7 +376,7 @@ return status &gt;= 400</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
 <li><strong>filenames</strong> (<em>str</em>) – Name of the file(s) to upload</li>
 <li><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path of where the file(s) is.</li>
-<li><strong>id</strong> (<em>int</em>) – deposition id of the record where the file(s) will be updated</li>
+<li><strong>_id</strong> (<em>int</em>) – deposition id of the record where the file(s) will be updated</li>
 <li><strong>Exception</strong> – </li>
 <li><strong>---------</strong> – </li>
 <li><strong>ZenodoException</strong> – raise if token not define (token = None) or if connection
@@ -317,7 +390,7 @@ return status &gt;= 400</li>
 
 <dl class="method">
 <dt id="datalight.zenodo.Zenodo.upload_metadata">
-<code class="descname">upload_metadata</code><span class="sig-paren">(</span><em>metadata</em>, <em>id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.upload_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.upload_metadata" title="Permalink to this definition">¶</a></dt>
+<code class="descname">upload_metadata</code><span class="sig-paren">(</span><em>_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.upload_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.upload_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload metadata to Zenodo repository.</p>
 <p>After creating the request and upload the file(s) we need to update
 the metadata needed by Zenodo related to the record.</p>
@@ -326,8 +399,10 @@ the metadata needed by Zenodo related to the record.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>metadata</strong> (<em>dict</em>) – dictionary which contains zenodo metadata</li>
-<li><strong>id</strong> (<em>int</em>) – deposition id of the record where the metadata will be updated</li>
+<li><strong>metadata</strong> (<em>dict</em>) – dictionary which contains zenodo metadata. It should be
+a dictionary with one key ‘metadata’ associated to another
+dictionary which contains the Zenodo metadata.</li>
+<li><strong>_id</strong> (<em>int</em>) – deposition id of the record where the metadata will be updated</li>
 </ul>
 </td>
 </tr>
@@ -371,6 +446,23 @@ should be provided by Zenodo but it is not (yet) the case.</p>
 <em class="property">class </em><code class="descclassname">datalight.zenodo_metadata.</code><code class="descname">ZenodoMetadata</code><span class="sig-paren">(</span><em>metadata</em>, <em>schema='/home/gruel/PycharmProjects/datalight/datalight/schemas/zenodo/metadata-1.0.0.yml'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo_metadata.html#ZenodoMetadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo_metadata.ZenodoMetadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to manage the Metadata needed for Zenodo.</p>
+<dl class="method">
+<dt id="datalight.zenodo_metadata.ZenodoMetadata.get_metadata">
+<code class="descname">get_metadata</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo_metadata.html#ZenodoMetadata.get_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo_metadata.ZenodoMetadata.get_metadata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method which will return Zenodo metadata</p>
+<p>This method will return a dictionary which contains Zenodo metadata.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><strong>metadata</strong> – Dictionary which contains Zenodo metadata.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Return type:</th><td class="field-body">dict</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="datalight.zenodo_metadata.ZenodoMetadata.set_metadata">
 <code class="descname">set_metadata</code><span class="sig-paren">(</span><em>metadata</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo_metadata.html#ZenodoMetadata.set_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo_metadata.ZenodoMetadata.set_metadata" title="Permalink to this definition">¶</a></dt>

@@ -115,18 +115,22 @@
 <span class="sd">:Copyright: IT Services, The University of Manchester</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">import</span> <span class="nn">os</span>
 
 <span class="c1"># pylint: disable=locally-disabled, invalid-name</span>
-<span class="c1"># try:</span>
-<span class="c1">#     from .conf import logger</span>
-<span class="c1"># except ImportError:</span>
-<span class="c1">#     from conf import logger</span>
 
-<span class="kn">from</span> <span class="nn">.conf</span> <span class="k">import</span> <span class="n">logger</span>
-
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">requests</span>
 <span class="kn">import</span> <span class="nn">json</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.conf</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">conf</span> <span class="k">import</span> <span class="n">logger</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.zenodo_metadata</span> <span class="k">import</span> <span class="n">ZenodoMetadata</span><span class="p">,</span> <span class="n">ZenodoMetadataException</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">zenodo_metadata</span> <span class="k">import</span> <span class="n">ZenodoMetadata</span><span class="p">,</span> <span class="n">ZenodoMetadataException</span>
 
 
 <div class="viewcode-block" id="ZenodoException"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.ZenodoException">[docs]</a><span class="k">class</span> <span class="nc">ZenodoException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
@@ -143,17 +147,23 @@
 <span class="sd">    token: str, optional</span>
 <span class="sd">        Token that need to be provided to Zenodo to be able to upload.</span>
 <span class="sd">        The attribute is optional.</span>
-<span class="sd">    sandbox_token: str</span>
-<span class="sd">        Token similar to the one above but to upload on the sandbox zone.</span>
-<span class="sd">        Files uploaded</span>
+<span class="sd">    sandbox: bool</span>
+<span class="sd">        Default False, if True, the record is created on the Zenodo sandbox</span>
+<span class="sd">        version which is provided for test purpose.</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="c1"># TODO verify that there are no json file where this information</span>
     <span class="c1"># can be downloaded.</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">sandbox</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">sandbox</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">token</span> <span class="o">=</span> <span class="n">token</span>
+
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No metadata provided. Use the set_metadata method.&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">sandbox</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">api_baseurl</span> <span class="o">=</span> <span class="s1">&#39;https://sandbox.zenodo.org/api/&#39;</span>
@@ -188,8 +198,8 @@
 <span class="sd">        status_code: int</span>
 <span class="sd">            status code return by the request (requests.status_code)</span>
 
-<span class="sd">        Exceptions</span>
-<span class="sd">        ----------</span>
+<span class="sd">        Exception</span>
+<span class="sd">        ---------</span>
 <span class="sd">        ZenodoException:</span>
 <span class="sd">            Raise exception if the request ended with a problem</span>
 
@@ -216,7 +226,7 @@
             <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
 
 <div class="viewcode-block" id="Zenodo.connection"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.connection">[docs]</a>    <span class="k">def</span> <span class="nf">connection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Method to test that connection with zenodo website is working.</span>
+        <span class="sd">&quot;&quot;&quot;Method to test that connection with Zenodo website is working.</span>
 
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
@@ -279,10 +289,16 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deposition id: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Deposition url: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span></div>
 
-<div class="viewcode-block" id="Zenodo.delete"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Zenodo.delete"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.delete">[docs]</a>    <span class="k">def</span> <span class="nf">delete</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to delete deposition.</span>
 
-<span class="sd">        note: it worked only if it is not publish.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        _id: int</span>
+<span class="sd">            deposition id of the record to delete</span>
+
+<span class="sd">        .. note::</span>
+<span class="sd">            it worked only if it is not publish.</span>
 
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
@@ -295,8 +311,8 @@
 
         <span class="c1"># Use provided if if not None. If not provided use self.deposition_id</span>
 
-        <span class="k">if</span> <span class="nb">id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="k">if</span> <span class="n">_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="n">_id</span>
 
         <span class="c1"># Create the request url</span>
         <span class="n">request_url</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depositions_url</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span>
@@ -317,7 +333,7 @@
 
 <span class="c1">#        self._check_status_code(self.status_code)</span>
 
-<div class="viewcode-block" id="Zenodo.upload_files"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.upload_files">[docs]</a>    <span class="k">def</span> <span class="nf">upload_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filenames</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Zenodo.upload_files"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.upload_files">[docs]</a>    <span class="k">def</span> <span class="nf">upload_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filenames</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to upload a file to Zenodo</span>
 
 <span class="sd">        Parameters</span>
@@ -326,7 +342,7 @@
 <span class="sd">            Name of the file(s) to upload</span>
 <span class="sd">        path: str, optional</span>
 <span class="sd">            Path of where the file(s) is.</span>
-<span class="sd">        id: int</span>
+<span class="sd">        _id: int</span>
 <span class="sd">            deposition id of the record where the file(s) will be updated</span>
 
 <span class="sd">        Exception</span>
@@ -344,8 +360,8 @@
         <span class="c1"># if type(self.deposition_id) is not int:</span>
         <span class="c1">#     self.get_deposition_id()</span>
 
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">_id</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="n">_id</span>
 
         <span class="c1"># Create the url to upload with the deposition_id</span>
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">depositions_url</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">/files&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">)</span>
@@ -382,7 +398,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">status_code</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_check_status_code</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="Zenodo.upload_metadata"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.upload_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">upload_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Zenodo.set_metadata"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.set_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">set_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method to read and validate metadata.</span>
+
+<span class="sd">        Return</span>
+<span class="sd">        ------</span>
+<span class="sd">        metadata: dict</span>
+<span class="sd">            dictionary with one key &#39;metadata&#39; associated to Zenodo metadata,</span>
+<span class="sd">            ready to be use for uploading.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+        <span class="n">_metadata</span> <span class="o">=</span> <span class="n">ZenodoMetadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">_metadata</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()}</span></div>
+
+<div class="viewcode-block" id="Zenodo.upload_metadata"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.upload_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">upload_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Upload metadata to Zenodo repository.</span>
 
 <span class="sd">        After creating the request and upload the file(s) we need to update</span>
@@ -391,22 +421,19 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        metadata: dict</span>
-<span class="sd">            dictionary which contains zenodo metadata</span>
+<span class="sd">            dictionary which contains zenodo metadata. It should be</span>
+<span class="sd">            a dictionary with one key &#39;metadata&#39; associated to another</span>
+<span class="sd">            dictionary which contains the Zenodo metadata.</span>
 
-<span class="sd">        id: int</span>
+<span class="sd">        _id: int</span>
 <span class="sd">            deposition id of the record where the metadata will be updated</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_token</span><span class="p">()</span>
+        <span class="n">metadata_to_upload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">()</span>
 
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;metadata:&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
-        <span class="c1"># Todo replace by test of zenodometadata</span>
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">dict</span> <span class="ow">or</span> <span class="s1">&#39;metadata&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">metadata</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="s1">&#39;Metadata should be &#39;</span>
-                                  <span class="s1">&#39;dictionary with one key: &quot;metadata&quot; &#39;</span><span class="p">)</span>
-
-        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">int</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="nb">id</span>
+        <span class="k">if</span> <span class="n">_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="n">_id</span>
 
         <span class="c1"># Create the url to upload with the deposition_id</span>
         <span class="n">url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">depositions_url</span> <span class="o">+</span> <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">)</span>
@@ -415,7 +442,7 @@
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span>
                                <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;access_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">},</span>
-                               <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metadata</span><span class="p">),</span>
+                               <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metadata_to_upload</span><span class="p">),</span>
                                <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">status_code</span>
@@ -431,14 +458,14 @@
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
 <span class="sd">        ZenodoException</span>
-<span class="sd">            raise if token not define (token = None) or if connection</span>
-<span class="sd">            return status &gt;= 400</span>
+<span class="sd">            raise if token not define (token = None) or</span>
+<span class="sd">            if connection return status &gt;= 400</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="c1"># Test if token was defined</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_token</span><span class="p">()</span>
 
-        <span class="n">publish_url</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">depositions_url</span> <span class="o">+</span> \
-                      <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">/actions/publish&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">)</span>
+        <span class="n">publish_url</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">depositions_url</span> <span class="o">+</span>
+                       <span class="s1">&#39;/</span><span class="si">{}</span><span class="s1">/actions/publish&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span><span class="p">))</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="n">publish_url</span><span class="p">,</span>
                                 <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;access_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">})</span>
 
@@ -451,16 +478,11 @@
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Status code: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
             <span class="k">return</span></div>
 
-        <span class="c1">#self._check_status_code(self.status_code)</span>
+        <span class="c1"># self._check_status_code(self.status_code)</span>
 
 <div class="viewcode-block" id="Zenodo.download_files"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.download_files">[docs]</a>    <span class="k">def</span> <span class="nf">download_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to download file present in a specific record</span>
 
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="s2">&quot;Not implemented&quot;</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="Zenodo.metadata_verify"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.metadata_verify">[docs]</a>    <span class="k">def</span> <span class="nf">metadata_verify</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;If implemented will be wrapper around the ZenodoMetadata class</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="s2">&quot;Not implemented&quot;</span><span class="p">)</span></div></div>
 </pre></div>

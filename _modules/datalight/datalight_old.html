@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>datalight.datalight &#8212; Datalight: data uploader to Zenodo data repositoryv0.5 documentation</title>
+    <title>datalight.datalight_old &#8212; Datalight: data uploader to Zenodo data repositoryv0.5 documentation</title>
     <link rel="stylesheet" href="../../_static/bootstrap-sphinx.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
@@ -104,7 +104,7 @@
       </div>
     <div class="col-md-9 content">
       
-  <h1>Source code for datalight.datalight</h1><div class="highlight"><pre>
+  <h1>Source code for datalight.datalight_old</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">Main module for datalight</span>
@@ -113,15 +113,6 @@
 
 <span class="sd">:Copyright: IT Services, The University of Mancheste</span>
 <span class="sd">&quot;&quot;&quot;</span>
-
-<span class="c1"># pylint: disable=locally-disabled, invalid-name</span>
-
-<span class="k">try</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">.__init__</span> <span class="k">import</span> <span class="n">__version__</span>
-    <span class="kn">from</span> <span class="nn">.conf</span> <span class="k">import</span> <span class="n">logger</span>
-<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-    <span class="kn">from</span> <span class="nn">__init__</span> <span class="k">import</span> <span class="n">__version__</span>
-    <span class="kn">from</span> <span class="nn">conf</span> <span class="k">import</span> <span class="n">logger</span>
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
@@ -137,8 +128,15 @@
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Install docopt package: pip install docopt --user&quot;</span><span class="p">)</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.__init__</span> <span class="k">import</span> <span class="n">__version__</span>
+    <span class="kn">from</span> <span class="nn">.conf</span> <span class="k">import</span> <span class="n">logger</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">__init__</span> <span class="k">import</span> <span class="n">__version__</span>
+    <span class="kn">from</span> <span class="nn">conf</span> <span class="k">import</span> <span class="n">logger</span>
 
-<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight_old.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Run datalight scripts to upload file on data repository</span>
 
 <span class="sd">    Command line::</span>
@@ -149,10 +147,8 @@
 
 <span class="sd">        -m metadata               File which contains the metadata information</span>
 <span class="sd">        --metadata=&lt;metadata&gt;     File which contains the metadata information</span>
-<span class="sd">        -p                        If present publish the data</span>
-<span class="sd">        --publish                 If present publish the data</span>
-<span class="sd">        --repository=&lt;repository&gt; Name of a data repository [default: zenodo]</span>
-<span class="sd">        --sandbox                 If present, datalight will use the sandbox data repository</span>
+<span class="sd">        --repository=&lt;repository&gt; Name of a data repository [default: zenodo].</span>
+<span class="sd">        --sandbox=&lt;sandbox&gt;]</span>
 <span class="sd">        -h, --help                Print this help</span>
 <span class="sd">        --version                 Print version of the software</span>
 
@@ -177,13 +173,22 @@
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;-m&#39;</span><span class="p">]</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span>
-
     <span class="n">repository</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--repository&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">repository</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">repository</span> <span class="o">=</span> <span class="s1">&#39;zenodo&#39;</span>
 
     <span class="n">sandbox</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--sandbox&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Read metadata from file</span>
+    <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">metadata</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">ruamel.yaml</span> <span class="k">import</span> <span class="n">YAML</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">YAML</span><span class="p">(</span><span class="n">typ</span><span class="o">=</span><span class="s2">&quot;safe&quot;</span><span class="p">,</span> <span class="n">pure</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)}</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="kn">import</span> <span class="nn">yaml</span>
+                <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)}</span>
 
     <span class="k">if</span> <span class="n">repository</span> <span class="o">==</span> <span class="s1">&#39;zenodo&#39;</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -233,10 +238,8 @@
     <span class="n">datarepo</span> <span class="o">=</span> <span class="n">DataRepo</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">sandbox</span><span class="o">=</span><span class="n">sandbox</span><span class="p">)</span>
     <span class="n">datarepo</span><span class="o">.</span><span class="n">get_deposition_id</span><span class="p">()</span>
     <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span>
-    <span class="n">datarepo</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
-    <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_metadata</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;-p&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--publish&#39;</span><span class="p">]:</span>
-        <span class="n">datarepo</span><span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">dict</span><span class="p">:</span>
+        <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">)</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Finished &quot;</span> <span class="o">+</span> <span class="n">logger</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 
 

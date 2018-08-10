@@ -111,7 +111,11 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#datalight-usage">Datalight usage</a></li>
+<li><a class="reference internal" href="#datalight-usage">Datalight usage</a><ul>
+<li><a class="reference internal" href="#publishing-the-data-at-the-upload-time">Publishing the data at the upload time</a></li>
+<li><a class="reference internal" href="#testing-the-upload">Testing the upload</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -143,11 +147,15 @@
 <span id="howto"></span><h1>How-To<a class="headerlink" href="#how-to" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>Before to use the software it is needed to create the file which will be use to fill the necessary metadata needed by the data repository to create the data record.</p>
+<p>Before to use the software it is needed to create the file which will
+be use to fill the necessary metadata needed by the data repository to
+create the data record.</p>
 <div class="section" id="zenodo-metadata">
 <h3>Zenodo Metadata<a class="headerlink" href="#zenodo-metadata" title="Permalink to this headline">¶</a></h3>
-<p>Zenodo data repository is asking for a very specific informations which should be included in <strong>every</strong> data record.</p>
-<p>Zenodo metadata which should <strong>always</strong> be include in any metadata are:</p>
+<p>Zenodo data repository is asking for a very specific informations
+which should be included in <strong>every</strong> data record.</p>
+<p>Zenodo metadata which should <strong>always</strong> be include in any metadata
+are:</p>
 <ul class="simple">
 <li>title</li>
 <li>description</li>
@@ -156,8 +164,8 @@
 <li>[access_right] (optional, default: open)</li>
 <li>[license] (optional, default: cc-by-0])</li>
 </ul>
-<p>some additional values can be needed depending on the values of
-the <em>upload_type</em> and <em>access_right</em>.</p>
+<p>some additional values can be needed depending on the values of the
+<em>upload_type</em> and <em>access_right</em>.</p>
 <p>If:</p>
 <ul class="simple">
 <li><em>upload_type</em> is equal to <em>publication</em> implied the presence of
@@ -172,17 +180,17 @@ it implied the presence of <em>license</em> keyword if not <em>license</em> will
 <li><em>access_right</em> is equal to <em>restricted</em> implied the presence
 of <em>access_conditions</em> keyword</li>
 </ul>
-<p><a class="reference external" href="http://developers.zenodo.org/#representation">Zenodo API</a> documentation
-present all the different metadata keywords accepted by it.
-In any doubt this is <strong>the</strong> reference page.</p>
-<p>Until Zenodo is providing their own schema there are no
-possibility to be sure that the schema is up-to-date. Datalight developer will
-try to keep up-to-date and be sure that any change in the Zenodo API will be
+<p><a class="reference external" href="http://developers.zenodo.org/#representation">Zenodo API</a>
+documentation present all the different metadata keywords accepted by
+it. In any doubt this is <strong>the</strong> reference page.</p>
+<p>Until Zenodo is providing their own schema there are no possibility to
+be sure that the schema is up-to-date. Datalight developer will try to
+keep up-to-date and be sure that any change in the Zenodo API will be
 reflected in the yaml schema.</p>
-<p>The associated informations to the records has to be provided
-in a text file following the <a class="reference external" href="http://yaml.org/">YAML format</a>.</p>
-<p>We decided to use YAML format because it is easier for humans
-to read and write than other metadata formats like XML or JSON.</p>
+<p>The associated informations to the records has to be provided in a
+text file following the <a class="reference external" href="http://yaml.org/">YAML format</a>.</p>
+<p>We decided to use YAML format because it is easier for humans to read
+and write than other metadata formats like XML or JSON.</p>
 <p>This format is describe in the following paragraph.</p>
 </div>
 <div class="section" id="id2">
@@ -191,16 +199,17 @@ to read and write than other metadata formats like XML or JSON.</p>
 <h4>Basics<a class="headerlink" href="#basics" title="Permalink to this headline">¶</a></h4>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last">Using a WYSIWYG (Microsoft Word) to create or edit a YAML file is not advised.</p>
+<p class="last">Using a WYSIWYG (Microsoft Word) to create or edit a YAML file is
+not advised.</p>
 </div>
-<p>YAML files can <em>optionally</em> begin with <cite>—</cite> and end with <cite>…</cite>
-That indicates the start and end of a document.</p>
+<p>YAML files can <em>optionally</em> begin with <cite>—</cite> and end with <cite>…</cite> That
+indicates the start and end of a document.</p>
 </div>
 <div class="section" id="comments">
 <h4>Comments<a class="headerlink" href="#comments" title="Permalink to this headline">¶</a></h4>
-<p>It is possible to add comments in a yaml file. The character used
-to declare that everything after that character is considered as
-comment is <strong>#</strong> (similar to python):</p>
+<p>It is possible to add comments in a yaml file. The character used to
+declare that everything after that character is considered as comment
+is <strong>#</strong> (similar to python):</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1"># This is a comment in yaml</span>
 <span class="l l-Scalar l-Scalar-Plain">title</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">a title</span> <span class="c1"># &lt;- The line read up to this character.</span>
 </pre></div>
@@ -208,7 +217,8 @@ comment is <strong>#</strong> (similar to python):</p>
 </div>
 <div class="section" id="key-value-pairs">
 <h4>Key-value pairs<a class="headerlink" href="#key-value-pairs" title="Permalink to this headline">¶</a></h4>
-<p>YAML keep informations using a key which is associated to a value (it is a called hashtable or in python dictionary):</p>
+<p>YAML keep informations using a key which is associated to a value (it
+is a called hashtable or in python dictionary):</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">title</span> <span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">A title for our data</span>
 </pre></div>
 </div>
@@ -231,22 +241,31 @@ comment is <strong>#</strong> (similar to python):</p>
 </pre></div>
 </div>
 <p>In either case the indentation will be ignored.</p>
-<p>Value can be more complex than just a string but list or combinaison of list and key-pair values. YAML will consider that lines prefixed with more spaces than the parent key are contained inside it; Moreover, all lines must be prefixed with the same amount of spaces to belong to the same map</p>
-<p>We are going to see some examples to understand what it means in the context of datalight metadata.</p>
-<p>A list in YAML where the key has the name <em>alist</em> and the value is a list of three elements:</p>
+<p>Value can be more complex than just a string but list or combinaison
+of list and key-pair values. YAML will consider that lines prefixed
+with more spaces than the parent key are contained inside it;
+Moreover, all lines must be prefixed with the same amount of spaces to
+belong to the same map</p>
+<p>We are going to see some examples to understand what it means in the
+context of datalight metadata.</p>
+<p>A list in YAML where the key has the name <em>alist</em> and the value is a
+list of three elements:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">alist</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">first element</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">second element.</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">third element</span>
 </pre></div>
 </div>
-<p>For datalight we can use it to list, for example, the <em>creators</em> of the data:</p>
+<p>For datalight we can use it to list, for example, the <em>creators</em> of
+the data:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Alan Smith</span>
 </pre></div>
 </div>
-<p>The value associated to a key can be a list but also another hashtable to add more informations. Here an example where we are providing the name for every creators but also the affiliation:</p>
+<p>The value associated to a key can be a list but also another hashtable
+to add more informations. Here an example where we are providing the
+name for every creators but also the affiliation:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">creators</span><span class="p p-Indicator">:</span>
   <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">name</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">Jane Doe</span>
     <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Neverland</span>
@@ -255,9 +274,12 @@ comment is <strong>#</strong> (similar to python):</p>
     <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Shire</span>
 </pre></div>
 </div>
-<p>Every element of the list will have two informations (name and affiliation).</p>
-<p>This is the description of the YAML format needed to create a metadata file to upload on our favorite data repository.</p>
-<p>In the following section, we are going to see different examples of valide metadata for Zenodo repository.</p>
+<p>Every element of the list will have two informations (name and
+affiliation).</p>
+<p>This is the description of the YAML format needed to create a metadata
+file to upload on our favorite data repository.</p>
+<p>In the following section, we are going to see different examples of
+valide metadata for Zenodo repository.</p>
 </div>
 </div>
 <div class="section" id="zenodo-metadata-examples">
@@ -279,10 +301,11 @@ comment is <strong>#</strong> (similar to python):</p>
     <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Shire</span>
 </pre></div>
 </div>
-<p>This metadata will be sufficient to upload successfully a dataset on Zenodo.</p>
+<p>This metadata will be sufficient to upload successfully a dataset on
+Zenodo.</p>
 <p>Zenodo will add the following one which will have their default value:</p>
 <div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="l l-Scalar l-Scalar-Plain">access_right</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">open</span>
-<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cc-by-4.0</span>
+<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CC-BY-4.0</span>
 </pre></div>
 </div>
 </div>
@@ -305,7 +328,7 @@ comment is <strong>#</strong> (similar to python):</p>
 
 <span class="l l-Scalar l-Scalar-Plain">access_right</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">restricted</span>
 
-<span class="l l-Scalar l-Scalar-Plain">access_conditions</span><span class="p p-Indicator">:</span> <span class="s">&quot;Only</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">through</span><span class="nv"> </span><span class="s">contact</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">lightform</span><span class="nv"> </span><span class="s">project&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">access_conditions</span><span class="p p-Indicator">:</span> <span class="s">&quot;Only</span><span class="nv"> </span><span class="s">available</span><span class="nv"> </span><span class="s">through</span><span class="nv"> </span><span class="s">contact</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">myroject</span><span class="nv"> </span><span class="s">project&quot;</span>
 
 <span class="l l-Scalar l-Scalar-Plain">communities</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">identifier</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">mycommunity</span>
@@ -321,14 +344,15 @@ comment is <strong>#</strong> (similar to python):</p>
       <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0005</span>
       <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ContactPerson</span>
 
-<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cc-by-4.0</span>
+<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CC-BY-4.0</span>
 
 <span class="l l-Scalar l-Scalar-Plain">keywords</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MyProject</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">another_keyword</span>
 
-<span class="l l-Scalar l-Scalar-Plain">notes</span><span class="p p-Indicator">:</span> <span class="s">&quot;If</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">reconize</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">OpenAir</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">where</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">indicate</span>
-       <span class="s">the</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">related</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">(as</span><span class="nv"> </span><span class="s">mention</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Zenodo</span><span class="nv"> </span><span class="s">documentation).&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">notes</span><span class="p p-Indicator">:</span> <span class="s">&quot;If</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">reconize</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">OpenAir</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">where</span><span class="nv"> </span><span class="s">you</span>
+       <span class="s">indicate</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">related</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">(as</span><span class="nv"> </span><span class="s">mention</span><span class="nv"> </span><span class="s">in</span>
+       <span class="s">the</span><span class="nv"> </span><span class="s">Zenodo</span><span class="nv"> </span><span class="s">documentation).&quot;</span>
 
 <span class="c1"># If project known in the OpenAir</span>
 <span class="c1">#grants:</span>
@@ -376,14 +400,15 @@ comment is <strong>#</strong> (similar to python):</p>
       <span class="l l-Scalar l-Scalar-Plain">orcid</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">0000-0000-0000-0005</span>
       <span class="l l-Scalar l-Scalar-Plain">type</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">ContactPerson</span>
 
-<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">cc-by-4.0</span>
+<span class="l l-Scalar l-Scalar-Plain">license</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">CC-BY-4.0</span>
 
 <span class="l l-Scalar l-Scalar-Plain">keywords</span><span class="p p-Indicator">:</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">MyProject</span>
     <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">another_keyword</span>
 
-<span class="l l-Scalar l-Scalar-Plain">notes</span><span class="p p-Indicator">:</span> <span class="s">&quot;If</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">reconize</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">OpenAir</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">where</span><span class="nv"> </span><span class="s">you</span><span class="nv"> </span><span class="s">indicate</span>
-       <span class="s">the</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">related</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">(as</span><span class="nv"> </span><span class="s">mention</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">Zenodo</span><span class="nv"> </span><span class="s">documentation).&quot;</span>
+<span class="l l-Scalar l-Scalar-Plain">notes</span><span class="p p-Indicator">:</span> <span class="s">&quot;If</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">number</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">not</span><span class="nv"> </span><span class="s">reconize</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">OpenAir</span><span class="nv"> </span><span class="s">this</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">where</span><span class="nv"> </span><span class="s">you</span>
+       <span class="s">indicate</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">information</span><span class="nv"> </span><span class="s">related</span><span class="nv"> </span><span class="s">to</span><span class="nv"> </span><span class="s">the</span><span class="nv"> </span><span class="s">grant</span><span class="nv"> </span><span class="s">(as</span><span class="nv"> </span><span class="s">mention</span><span class="nv"> </span><span class="s">in</span>
+       <span class="s">the</span><span class="nv"> </span><span class="s">Zenodo</span><span class="nv"> </span><span class="s">documentation).&quot;</span>
 
 <span class="c1"># If project known in the OpenAir</span>
 <span class="c1">#grants:</span>
@@ -402,21 +427,26 @@ comment is <strong>#</strong> (similar to python):</p>
 </div>
 <div class="section" id="datalight-usage">
 <h2>Datalight usage<a class="headerlink" href="#datalight-usage" title="Permalink to this headline">¶</a></h2>
-<p>When you have a file(s)/directory containing your data and a proper metadata file
-associated, you can upload your data to Zenodo data repository.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ datalight file1 --metadata<span class="o">=</span>&lt;name of the file which contains zenodo metadata&gt;
-$ datafile file1 file2 --metadata<span class="o">=</span>&lt;name of the file which contains zenodo metadata&gt;
-$ datafile directory --metadata<span class="o">=</span>&lt;name of the file which contains zenodo metadata&gt;
+<p>When you have a file(s)/directory containing your data and a proper
+metadata file associated, you can upload your data to Zenodo data
+repository.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ datalight file1 -m &lt;name of the file which contains zenodo metadata&gt;
+$ datafile file1 file2 -m &lt;name of the file which contains zenodo metadata&gt;
+$ datafile directory -m &lt;name of the file which contains zenodo metadata&gt;
 </pre></div>
 </div>
-<p>The <strong>–metadata</strong> argument should point to the file which contains the Zenodo metadata as describe above.</p>
+<p>The <strong>–metadata</strong> argument should point to the file which contains
+the Zenodo metadata as describe above.</p>
 <div class="admonition warning">
 <p class="first admonition-title">Warning</p>
-<p class="last"><strong>–metadata</strong> argument is <strong>not optional</strong>. It has to be provided.</p>
+<p class="last"><strong>-m &lt;metadata_file&gt;</strong>  or <strong>–metadata=&lt;metadata_file&gt;</strong> argument
+is <strong>not optional</strong>. It has to be provided.</p>
 </div>
-<p>You can add as many argument as you want and they should be the name of file or the name of a directory which contains the data you want to upload to the data repository.</p>
+<p>You can add as many argument as you want and they should be the name
+of file or the name of a directory which contains the data you want to
+upload to the data repository.</p>
 <p>Example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ datalight metadata.yaml --metadata=metadata.yaml
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ datalight metadata.yaml -m metadata.yaml
 </pre></div>
 </div>
 <p>Where <em>metadata.yaml</em> will contains the following values:</p>
@@ -433,7 +463,60 @@ $ datafile directory --metadata<span class="o">=</span>&lt;name of the file whic
     <span class="l l-Scalar l-Scalar-Plain">affiliation</span><span class="p p-Indicator">:</span> <span class="l l-Scalar l-Scalar-Plain">University of Shire</span>
 </pre></div>
 </div>
-<p>In this example, the file containing the metadata will be upload as a data file and store on Zenodo.</p>
+<p>In this example, the file containing the metadata will be upload as a
+data file and store on Zenodo.</p>
+<div class="section" id="publishing-the-data-at-the-upload-time">
+<h3>Publishing the data at the upload time<a class="headerlink" href="#publishing-the-data-at-the-upload-time" title="Permalink to this headline">¶</a></h3>
+<p>By default the data will be upload on the data repository but
+they will not be published. You can ask datalight to do it using the option
+<strong>-p</strong> or <strong>–publish</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ datalight metadata.yaml -m metadata.yaml -p
+</pre></div>
+</div>
+<p>or:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ datalight metadata.yaml -m metadata.yaml --publish
+</pre></div>
+</div>
+<p>The file metadata.yaml will be upload with the information found
+in the file containing the metadata (here the same file)
+and will be publish on the data repository.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">data which have been publish <strong>cannot</strong> be removed.
+They will be present forever on the data repository.</p>
+</div>
+<p>The finalisation of the data and the publication can always be done through the web interface provided by Zenodo: <a class="reference external" href="https://zenodo.org">Zenodo webinterface</a></p>
+</div>
+<div class="section" id="testing-the-upload">
+<h3>Testing the upload<a class="headerlink" href="#testing-the-upload" title="Permalink to this headline">¶</a></h3>
+<p>If you prefer to test the upload of your data, Zenodo is providing
+a sandbox and you can use it for the tests by using the option <strong>–sandbox</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ datalight metadata.yaml -m metadata.yaml --publish --sandbox
+</pre></div>
+</div>
+<p>will publish the data on the <a class="reference external" href="https://sandbox.zenodo.org">sandbox website</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ol class="arabic simple">
+<li>To be able to use the sandbox you need to create the token from: <a class="reference external" href="https://sandbox.zenodo.org">https://sandbox.zenodo.org</a>.</li>
+</ol>
+<p>2. The token should be copied in the file <strong>.zenodo</strong> with
+the keyword <em>[sandbox.zenodo.org]</em> e.g.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sandbox</span><span class="o">.</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">]</span>
+<span class="n">lightForm</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">zenodo</span> <span class="n">sandbox</span> <span class="n">token</span><span class="o">&gt;</span>
+
+<span class="p">[</span><span class="n">zenodo</span><span class="o">.</span><span class="n">org</span><span class="p">]</span>
+<span class="n">lightform</span> <span class="o">=</span> <span class="o">&lt;</span><span class="n">zenodo</span> <span class="n">token</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ol class="last arabic simple" start="3">
+<li>Zenodo sandbox is not really reliable and the tests can failed with an error 500.
+That does not necessariliy means than the upload didn’t work but
+that at least one step where missing.
+That can create a record on the sandbox that you will have to clean manually.</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 
