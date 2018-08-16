@@ -99,7 +99,6 @@
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
 <li><a class="reference internal" href="#module-datalight.conf">datalight.conf module</a></li>
 <li><a class="reference internal" href="#module-datalight.datalight">datalight.datalight module</a></li>
-<li><a class="reference internal" href="#module-datalight.datalight_old">datalight.datalight_old module</a></li>
 <li><a class="reference internal" href="#datalight-main-module">datalight.main module</a></li>
 <li><a class="reference internal" href="#module-datalight.zenodo">datalight.zenodo module</a></li>
 <li><a class="reference internal" href="#module-datalight.zenodo_metadata">datalight.zenodo_metadata module</a></li>
@@ -191,53 +190,12 @@
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code> – if the file or the folder to treat is not available.</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-datalight.datalight_old">
-<span id="datalight-datalight-old-module"></span><h2>datalight.datalight_old module<a class="headerlink" href="#module-datalight.datalight_old" title="Permalink to this headline">¶</a></h2>
-<p>Main module for datalight</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Nicolas Gruel &lt;<a class="reference external" href="mailto:nicolas&#46;gruel&#37;&#52;&#48;manchester&#46;ac&#46;uk">nicolas<span>&#46;</span>gruel<span>&#64;</span>manchester<span>&#46;</span>ac<span>&#46;</span>uk</a>&gt;</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">IT Services, The University of Mancheste</td>
-</tr>
-</tbody>
-</table>
-<dl class="function">
-<dt id="datalight.datalight_old.main">
-<code class="descclassname">datalight.datalight_old.</code><code class="descname">main</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight_old.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight_old.main" title="Permalink to this definition">¶</a></dt>
-<dd><p>Run datalight scripts to upload file on data repository</p>
-<p>Command line:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usage</span><span class="p">:</span> <span class="n">datalight</span> <span class="p">[</span><span class="o">-</span><span class="n">h</span> <span class="o">|</span> <span class="o">--</span><span class="n">help</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">files</span><span class="o">&gt;...</span> <span class="p">(</span><span class="o">-</span><span class="n">m</span> <span class="o">&lt;</span><span class="n">metadata</span><span class="o">&gt;</span> <span class="o">|</span> <span class="o">--</span><span class="n">metadata</span><span class="o">=&lt;</span><span class="n">metadata</span><span class="o">&gt;</span><span class="p">)</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span>
-
-<span class="n">Options</span><span class="p">:</span>
-
-<span class="o">-</span><span class="n">m</span> <span class="n">metadata</span>               <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
-<span class="o">--</span><span class="n">metadata</span><span class="o">=&lt;</span><span class="n">metadata</span><span class="o">&gt;</span>     <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
-<span class="o">--</span><span class="n">repository</span><span class="o">=&lt;</span><span class="n">repository</span><span class="o">&gt;</span> <span class="n">Name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">repository</span> <span class="p">[</span><span class="n">default</span><span class="p">:</span> <span class="n">zenodo</span><span class="p">]</span><span class="o">.</span>
-<span class="o">--</span><span class="n">sandbox</span><span class="o">=&lt;</span><span class="n">sandbox</span><span class="o">&gt;</span><span class="p">]</span>
-<span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>                <span class="n">Print</span> <span class="n">this</span> <span class="n">help</span>
-<span class="o">--</span><span class="n">version</span>                 <span class="n">Print</span> <span class="n">version</span> <span class="n">of</span> <span class="n">the</span> <span class="n">software</span>
-
-<span class="n">Examples</span><span class="p">:</span>
-    <span class="n">datalight</span> <span class="n">file1</span> <span class="n">file2</span>
-    <span class="n">datalight</span> <span class="n">directory</span> <span class="o">--</span><span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="o">.</span><span class="n">yml</span> <span class="o">--</span><span class="n">repository</span><span class="o">=</span><span class="n">zenodo</span>
-    <span class="n">datalight</span> <span class="n">file</span> <span class="o">-</span><span class="n">m</span> <span class="n">metadata</span><span class="o">.</span><span class="n">yml</span>
-</pre></div>
-</div>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code> – if the file or the folder to treat is not available.</td>
+<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code> – if the file or the folder to treat is not available.</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code> – if no key found for the data repository wanted</li>
+<li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code> – if the not possible to import the data repository wanted</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>

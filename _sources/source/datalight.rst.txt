@@ -20,14 +20,6 @@ datalight.datalight module
     :undoc-members:
     :show-inheritance:
 
-datalight.datalight\_old module
--------------------------------
-
-.. automodule:: datalight.datalight_old
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 datalight.main module
 ---------------------
 

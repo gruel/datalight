@@ -165,6 +165,10 @@
 <span class="sd">    ------</span>
 <span class="sd">    SystemExit</span>
 <span class="sd">        if the file or the folder to treat is not available.</span>
+<span class="sd">    KeyError</span>
+<span class="sd">        if no key found for the data repository wanted</span>
+<span class="sd">    ImportError</span>
+<span class="sd">        if the not possible to import the data repository wanted</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="n">arguments</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="n">main</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
@@ -200,18 +204,18 @@
 
         <span class="k">try</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">sandbox</span><span class="p">:</span>
-                <span class="n">token</span> <span class="o">=</span> <span class="n">zenoconfig</span><span class="p">[</span><span class="s1">&#39;sandbox.zenodo.org&#39;</span><span class="p">][</span><span class="s1">&#39;lightForm&#39;</span><span class="p">]</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">zenoconfig</span><span class="p">[</span><span class="s1">&#39;sandbox.zenodo.org&#39;</span><span class="p">][</span><span class="s1">&#39;lightform&#39;</span><span class="p">]</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">token</span> <span class="o">=</span> <span class="n">zenoconfig</span><span class="p">[</span><span class="s1">&#39;zenodo.org&#39;</span><span class="p">][</span><span class="s1">&#39;lightForm&#39;</span><span class="p">]</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="n">zenoconfig</span><span class="p">[</span><span class="s1">&#39;zenodo.org&#39;</span><span class="p">][</span><span class="s1">&#39;lightform&#39;</span><span class="p">]</span>
         <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
             <span class="n">token</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s1">&#39;Provide Zenodo token: &#39;</span><span class="p">)</span>
 
             <span class="c1"># Save the token to the ~/.zenodo</span>
             <span class="n">config</span> <span class="o">=</span> <span class="n">configparser</span><span class="o">.</span><span class="n">ConfigParser</span><span class="p">()</span>
             <span class="k">if</span> <span class="n">sandbox</span><span class="p">:</span>
-                <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sanbox.zenodo.org&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lightForm&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+                <span class="n">config</span><span class="p">[</span><span class="s1">&#39;sandbox.zenodo.org&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lightform&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
             <span class="k">else</span><span class="p">:</span>
-                <span class="n">config</span><span class="p">[</span><span class="s1">&#39;zenodo.org&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lightForm&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
+                <span class="n">config</span><span class="p">[</span><span class="s1">&#39;zenodo.org&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;lightform&#39;</span><span class="p">:</span> <span class="n">token</span><span class="p">}</span>
 
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tokenfile</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
                 <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span>
