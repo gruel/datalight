@@ -146,24 +146,61 @@ installation from source.</p>
 </div>
 <div class="section" id="from-sources">
 <h2>From sources<a class="headerlink" href="#from-sources" title="Permalink to this headline">¶</a></h2>
-<p>The sources for datalight can be downloaded from the <a class="reference external" href="https://github.com/gruel/datalight">Github repo</a>.</p>
+<p>The sources for datalight can be downloaded from the <a href="#id2"><span class="problematic" id="id3">`Github repo`_</span></a>.</p>
+<p>the easiest way to install from the source is done by executing
+the following command:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install https://github.com/gruel/datalight/archive/master.zip
+</pre></div>
+</div>
 <p>You can either clone the public repository:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> git clone https://github.com/gruel/datalight
 </pre></div>
 </div>
-<p>Or download the <a class="reference external" href="https://github.com/gruel/datalight/tarball/master">tarball</a>:</p>
+<p>Or download the <a href="#id4"><span class="problematic" id="id5">`tarball`_</span></a>:</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> curl -OL https://github.com/gruel/datalight/tarball/master
-<span class="gp">$</span> tar xvf XXXX
+<span class="gp">$</span> tar xvf master -C datalight --strip-components<span class="o">=</span><span class="m">1</span>
 </pre></div>
 </div>
 <p>Once you have a copy of the source, you can install it with:</p>
-<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> datalight
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="gp">$</span> <span class="nb">cd</span> datalight-master
 <span class="gp">$</span> python setup.py install --user
 </pre></div>
 </div>
-<p>The option –user will install <strong>datalight</strong> in the user directory
-without the need to be administrator or root on the system.</p>
 <p>The installer should take care of the missing dependencies, if any.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>on MacOS X, the downloaded the file could be uncompress automatically.
+In this case go to the directory were the code is and write:</p>
+<div class="last highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install . --user
+</pre></div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>The option <code class="docutils literal notranslate"><span class="pre">--user</span></code> will install <strong>datalight</strong> in the user directory
+without the need to be administrator or root on the system.</p>
+<p>Thhat prevent breaking any system-wide packages. It can happen that
+you’ll need to manually add the user base’s binary directory
+to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
+<p>On Linux and macOS you can find the user base binary directory by running
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">site</span> <span class="pre">--user-base</span></code> and adding <code class="docutils literal notranslate"><span class="pre">bin</span></code> to the end. For example,
+this will typically print <code class="docutils literal notranslate"><span class="pre">~/.local</span></code> (with <code class="docutils literal notranslate"><span class="pre">~</span></code> expanded to the
+absolute path to your home directory) so you’ll need to add
+<code class="docutils literal notranslate"><span class="pre">~/.local/bin</span></code> to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. You can set your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> permanently by
+modifying <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>.</p>
+<div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">echo &#39;PATH=&quot;${PATH}:${HOME}/Library/Python/3.7/bin&quot;&#39; &gt;&gt; ~/.bash_profile</span>
+<span class="go">echo &#39;export PATH&#39; &gt;&gt; ~/.bash_profile</span>
+</pre></div>
+</div>
+<p class="last">On Windows you can find the user base binary directory by running
+<code class="docutils literal notranslate"><span class="pre">py</span> <span class="pre">-m</span> <span class="pre">site</span> <span class="pre">--user-site</span></code> and replacing <code class="docutils literal notranslate"><span class="pre">site-packages</span></code> with
+<code class="docutils literal notranslate"><span class="pre">Scripts</span></code>. For example, this could return
+<code class="docutils literal notranslate"><span class="pre">C:\Users\Username\AppData\Roaming\Python37\site-packages</span></code> so you would
+need to set your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> to include
+<code class="docutils literal notranslate"><span class="pre">C:\Users\Username\AppData\Roaming\Python37\Scripts</span></code>. You can set your
+user <code class="docutils literal notranslate"><span class="pre">PATH</span></code> permanently in the <strong>Control Panel</strong>. You may need to log
+out for the <code class="docutils literal notranslate"><span class="pre">PATH</span></code> changes to take effect.</p>
+</div>
 </div>
 <div class="section" id="data-files">
 <h2>Data files<a class="headerlink" href="#data-files" title="Permalink to this headline">¶</a></h2>
