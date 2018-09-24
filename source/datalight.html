@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -162,6 +162,27 @@
 </tr>
 </tbody>
 </table>
+<dl class="exception">
+<dt id="datalight.datalight.DatalightException">
+<em class="property">exception </em><code class="descclassname">datalight.datalight.</code><code class="descname">DatalightException</code><a class="reference internal" href="../_modules/datalight/datalight.html#DatalightException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.DatalightException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Class for exception</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="datalight.datalight.get_files_path">
+<code class="descclassname">datalight.datalight.</code><code class="descname">get_files_path</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#get_files_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.get_files_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get the path(s) of the file(s)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fname</strong> (<em>str</em>) – Name of the file to get the path or the directory to list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="function">
 <dt id="datalight.datalight.main">
 <code class="descclassname">datalight.datalight.</code><code class="descname">main</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.main" title="Permalink to this definition">¶</a></dt>
@@ -171,14 +192,15 @@
 
 <span class="n">Options</span><span class="p">:</span>
 
-<span class="o">-</span><span class="n">m</span> <span class="n">metadata</span>               <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
-<span class="o">--</span><span class="n">metadata</span><span class="o">=&lt;</span><span class="n">metadata</span><span class="o">&gt;</span>     <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
-<span class="o">-</span><span class="n">p</span>                        <span class="n">If</span> <span class="n">present</span> <span class="n">publish</span> <span class="n">the</span> <span class="n">data</span>
-<span class="o">--</span><span class="n">publish</span>                 <span class="n">If</span> <span class="n">present</span> <span class="n">publish</span> <span class="n">the</span> <span class="n">data</span>
-<span class="o">--</span><span class="n">repository</span><span class="o">=&lt;</span><span class="n">repository</span><span class="o">&gt;</span> <span class="n">Name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">repository</span> <span class="p">[</span><span class="n">default</span><span class="p">:</span> <span class="n">zenodo</span><span class="p">]</span>
-<span class="o">--</span><span class="n">sandbox</span>                 <span class="n">If</span> <span class="n">present</span><span class="p">,</span> <span class="n">datalight</span> <span class="n">will</span> <span class="n">use</span> <span class="n">the</span> <span class="n">sandbox</span> <span class="n">data</span> <span class="n">repository</span>
-<span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>                <span class="n">Print</span> <span class="n">this</span> <span class="n">help</span>
-<span class="o">--</span><span class="n">version</span>                 <span class="n">Print</span> <span class="n">version</span> <span class="n">of</span> <span class="n">the</span> <span class="n">software</span>
+<span class="o">-</span><span class="n">m</span> <span class="n">FILE</span> <span class="o">--</span><span class="n">metadata</span><span class="o">=</span><span class="n">FILE</span>        <span class="n">File</span> <span class="n">which</span> <span class="n">contains</span> <span class="n">the</span> <span class="n">metadata</span> <span class="n">information</span>
+<span class="o">-</span><span class="n">z</span> <span class="n">zipname</span> <span class="o">--</span><span class="n">zipname</span><span class="o">=</span><span class="n">FILE</span>      <span class="n">Name</span> <span class="n">of</span> <span class="n">the</span> <span class="nb">zip</span> <span class="n">file</span> <span class="n">which</span> <span class="n">will</span> <span class="n">be</span> <span class="n">uploaded</span> <span class="p">[</span><span class="n">default</span><span class="p">:</span> <span class="n">data</span><span class="o">.</span><span class="n">zip</span><span class="p">]</span>
+<span class="o">--</span><span class="n">nozip</span>                        <span class="n">Do</span> <span class="ow">not</span> <span class="n">create</span> <span class="nb">zip</span> <span class="n">file</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">data</span> <span class="n">to</span> <span class="n">upload</span>
+<span class="o">-</span><span class="n">r</span> <span class="n">NAME</span> <span class="o">--</span><span class="n">repository</span><span class="o">=</span><span class="n">NAME</span>      <span class="n">Name</span> <span class="n">of</span> <span class="n">a</span> <span class="n">data</span> <span class="n">repository</span> <span class="p">[</span><span class="n">default</span><span class="p">:</span> <span class="n">zenodo</span><span class="p">]</span>
+<span class="o">-</span><span class="n">p</span> <span class="o">--</span><span class="n">publish</span>                    <span class="n">If</span> <span class="n">present</span> <span class="n">publish</span> <span class="n">the</span> <span class="n">data</span>
+<span class="o">-</span><span class="n">s</span> <span class="o">--</span><span class="n">sandbox</span>                   <span class="n">If</span> <span class="n">present</span><span class="p">,</span> <span class="n">datalight</span> <span class="n">will</span> <span class="n">use</span> <span class="n">the</span> <span class="n">sandbox</span> <span class="n">data</span> <span class="n">repository</span>
+<span class="o">-</span><span class="n">k</span> <span class="o">--</span><span class="n">keep</span>                      <span class="n">Keep</span> <span class="nb">zip</span> <span class="n">file</span> <span class="n">created</span>
+<span class="o">-</span><span class="n">h</span> <span class="o">--</span><span class="n">help</span>                      <span class="n">Print</span> <span class="n">this</span> <span class="n">help</span>
+<span class="o">-</span><span class="n">v</span> <span class="o">--</span><span class="n">version</span>                   <span class="n">Print</span> <span class="n">version</span> <span class="n">of</span> <span class="n">the</span> <span class="n">software</span>
 
 <span class="n">Examples</span><span class="p">:</span>
     <span class="n">datalight</span> <span class="n">file1</span> <span class="n">file2</span>
@@ -194,6 +216,30 @@
 <li><code class="xref py py-exc docutils literal notranslate"><span class="pre">SystemExit</span></code> – if the file or the folder to treat is not available.</li>
 <li><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code> – if no key found for the data repository wanted</li>
 <li><code class="xref py py-exc docutils literal notranslate"><span class="pre">ImportError</span></code> – if the not possible to import the data repository wanted</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datalight.datalight.unzip">
+<code class="descclassname">datalight.datalight.</code><code class="descname">unzip</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#unzip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.unzip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="datalight.datalight.zipdata">
+<code class="descclassname">datalight.datalight.</code><code class="descname">zipdata</code><span class="sig-paren">(</span><em>files</em>, <em>zipname='data.zip'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#zipdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.zipdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to zip files which will be uploaded to the data repository.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>files</strong> (<em>list</em>) – a list of string which contains the path of the files which will be
+part of the zip archive. Path will be conserved.</li>
+<li><strong>zipname</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the zip file to create. Default: data.zip</li>
 </ul>
 </td>
 </tr>
@@ -227,15 +273,31 @@ and download data on Zenodo.</p>
 <dl class="attribute">
 <dt id="datalight.zenodo.Zenodo.token">
 <code class="descname">token</code><a class="headerlink" href="#datalight.zenodo.Zenodo.token" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>str, optional</em> – Token that need to be provided to Zenodo to be able to upload.
+<dd><p>Token that need to be provided to Zenodo to be able to upload.
 The attribute is optional.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">str, optional</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">
 <dt id="datalight.zenodo.Zenodo.sandbox">
 <code class="descname">sandbox</code><a class="headerlink" href="#datalight.zenodo.Zenodo.sandbox" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>bool</em> – Default False, if True, the record is created on the Zenodo sandbox
+<dd><p>Default False, if True, the record is created on the Zenodo sandbox
 version which is provided for test purpose.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">bool</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -252,21 +314,23 @@ version which is provided for test purpose.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>_id</strong> (<em>int</em>) – deposition id of the record to delete</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>_id</strong> (<em>int</em>) – deposition id of the record to delete.
+Can be done only if the record was not publish.</li>
+<li><strong>Exception</strong> – </li>
+<li><strong>---------</strong> – </li>
+<li><strong>ZenodoException</strong> – raise if token not define (token = None) or if connection
+return status &gt;= 400</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-<p>:param .. note::: it worked only if it is not publish.
-:param Exception:
-:param ———:
-:param ZenodoException: raise if token not define (token = None) or if connection</p>
-<blockquote>
-<div>return status &gt;= 400</div></blockquote>
 </dd></dl>
 
 <dl class="method">
 <dt id="datalight.zenodo.Zenodo.download_files">
-<code class="descname">download_files</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.download_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.download_files" title="Permalink to this definition">¶</a></dt>
+<code class="descname">download_files</code><span class="sig-paren">(</span><em>id=None</em>, <em>doi=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.download_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.download_files" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method to download file present in a specific record</p>
 </dd></dl>
 
@@ -277,8 +341,16 @@ version which is provided for test purpose.</p>
 <dl class="attribute">
 <dt id="datalight.zenodo.Zenodo.deposition_id">
 <code class="descname">deposition_id</code><a class="headerlink" href="#datalight.zenodo.Zenodo.deposition_id" title="Permalink to this definition">¶</a></dt>
-<dd><p><em>int</em> – Deposition id gave by Zenodo deposition api to be used to upload
+<dd><p>Deposition id gave by Zenodo deposition api to be used to upload
 files and metadata.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Type:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="attribute">

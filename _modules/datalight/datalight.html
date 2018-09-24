@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -125,6 +125,7 @@
 
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">zipfile</span> <span class="k">import</span> <span class="n">ZipFile</span>
 <span class="kn">import</span> <span class="nn">configparser</span>  <span class="c1"># read the ini file containing zenodo information (token)</span>
 
 <span class="c1"># To get the home directory</span>
@@ -138,6 +139,68 @@
     <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
 
 
+<div class="viewcode-block" id="DatalightException"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight.DatalightException">[docs]</a><span class="k">class</span> <span class="nc">DatalightException</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for exception</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="get_files_path"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight.get_files_path">[docs]</a><span class="k">def</span> <span class="nf">get_files_path</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Function to get the path(s) of the file(s)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fname: str</span>
+<span class="sd">        Name of the file to get the path or the directory to list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># If fname is a file return a list with fname</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+        <span class="n">files_paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">fname</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+         <span class="c1"># initializing empty file paths list</span>
+        <span class="n">file_paths</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># crawling through directory and subdirectories</span>
+        <span class="k">for</span> <span class="n">root</span><span class="p">,</span> <span class="n">directories</span><span class="p">,</span> <span class="n">files</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">walk</span><span class="p">(</span><span class="n">fname</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+                <span class="c1"># join the two strings in order to form the full filepath.</span>
+                <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+                <span class="n">file_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">filepath</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_paths</span><span class="p">):</span>
+        <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;File or directory: </span><span class="si">{}</span><span class="s1"> to upload does not exist.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="n">DatalightException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="c1"># returning all file paths</span>
+    <span class="k">return</span> <span class="n">file_paths</span></div>
+
+
+<div class="viewcode-block" id="zipdata"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight.zipdata">[docs]</a><span class="k">def</span> <span class="nf">zipdata</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">zipname</span><span class="o">=</span><span class="s1">&#39;data.zip&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Method to zip files which will be uploaded to the data repository.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    files: list</span>
+<span class="sd">        a list of string which contains the path of the files which will be</span>
+<span class="sd">        part of the zip archive. Path will be conserved.</span>
+<span class="sd">    zipname: str, optional</span>
+<span class="sd">        Name of the zip file to create. Default: data.zip</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Zip the files to create archive: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">zipname</span><span class="p">))</span>
+
+    <span class="c1"># writing files to a zipfile</span>
+    <span class="k">with</span> <span class="n">ZipFile</span><span class="p">(</span><span class="n">zipname</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nb">zip</span><span class="p">:</span>
+        <span class="c1"># writing each file one by one</span>
+        <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">files</span><span class="p">:</span>
+            <span class="nb">zip</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="unzip"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight.unzip">[docs]</a><span class="k">def</span> <span class="nf">unzip</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
 <div class="viewcode-block" id="main"><a class="viewcode-back" href="../../source/datalight.html#datalight.datalight.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Run datalight scripts to upload file on data repository</span>
 
@@ -147,14 +210,15 @@
 
 <span class="sd">        Options:</span>
 
-<span class="sd">        -m metadata               File which contains the metadata information</span>
-<span class="sd">        --metadata=&lt;metadata&gt;     File which contains the metadata information</span>
-<span class="sd">        -p                        If present publish the data</span>
-<span class="sd">        --publish                 If present publish the data</span>
-<span class="sd">        --repository=&lt;repository&gt; Name of a data repository [default: zenodo]</span>
-<span class="sd">        --sandbox                 If present, datalight will use the sandbox data repository</span>
-<span class="sd">        -h, --help                Print this help</span>
-<span class="sd">        --version                 Print version of the software</span>
+<span class="sd">        -m FILE --metadata=FILE        File which contains the metadata information</span>
+<span class="sd">        -z zipname --zipname=FILE      Name of the zip file which will be uploaded [default: data.zip]</span>
+<span class="sd">        --nozip                        Do not create zip file containing the data to upload</span>
+<span class="sd">        -r NAME --repository=NAME      Name of a data repository [default: zenodo]</span>
+<span class="sd">        -p --publish                    If present publish the data</span>
+<span class="sd">        -s --sandbox                   If present, datalight will use the sandbox data repository</span>
+<span class="sd">        -k --keep                      Keep zip file created</span>
+<span class="sd">        -h --help                      Print this help</span>
+<span class="sd">        -v --version                   Print version of the software</span>
 
 <span class="sd">        Examples:</span>
 <span class="sd">            datalight file1 file2</span>
@@ -171,23 +235,48 @@
 <span class="sd">        if the not possible to import the data repository wanted</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
+    <span class="c1"># Read the arguments and option with docopt</span>
     <span class="n">arguments</span> <span class="o">=</span> <span class="n">docopt</span><span class="p">(</span><span class="n">main</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">,</span> <span class="n">argv</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
                        <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">)</span>
 
     <span class="c1"># Convert docopt results in the proper variable (change type when needed)</span>
 
-    <span class="n">fname</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;&lt;files&gt;&#39;</span><span class="p">]</span>
-    <span class="k">if</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;-m&#39;</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;-m&#39;</span><span class="p">]</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span>
+    <span class="c1"># Lists all the files and/or directories to upload</span>
+    <span class="n">fnames</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;&lt;files&gt;&#39;</span><span class="p">]</span>
 
+    <span class="c1"># Get list of the files path to upload</span>
+    <span class="n">files</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">fname</span> <span class="ow">in</span> <span class="n">fnames</span><span class="p">:</span>
+            <span class="n">files</span> <span class="o">+=</span> <span class="n">get_files_path</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">DatalightException</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Problem with the files to upload.&#39;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
+
+    <span class="c1"># option which will give the name of the metadata file</span>
+    <span class="n">metadata</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--metadata&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">metadata</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s1">&#39;Metadata file: </span><span class="si">{}</span><span class="s1"> does not exist.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">metadata</span><span class="p">))</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># Choice of repository default Zenodo</span>
     <span class="n">repository</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--repository&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="n">repository</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">repository</span> <span class="o">=</span> <span class="s1">&#39;zenodo&#39;</span>
 
+    <span class="c1"># If sandbox is present the version of the repository</span>
+    <span class="c1"># used will be the sandbox one</span>
     <span class="n">sandbox</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--sandbox&#39;</span><span class="p">]</span>
+
+    <span class="c1"># Zip data in an archive (to keep paths)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--nozip&#39;</span><span class="p">]:</span>
+        <span class="n">zipname</span> <span class="o">=</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--zipname&#39;</span><span class="p">]</span>
+        <span class="n">zipdata</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">zipname</span><span class="p">)</span>
+
+        <span class="c1"># Change the name of the files to upload for the zip file created</span>
+        <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="p">[</span><span class="n">zipname</span><span class="p">],</span> <span class="s1">&#39;.&#39;</span>
 
     <span class="k">if</span> <span class="n">repository</span> <span class="o">==</span> <span class="s1">&#39;zenodo&#39;</span><span class="p">:</span>
         <span class="k">try</span><span class="p">:</span>
@@ -220,27 +309,20 @@
             <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">tokenfile</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">configfile</span><span class="p">:</span>
                 <span class="n">config</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span>
 
-    <span class="k">try</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fname</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
-            <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">)</span>
-            <span class="n">files</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-        <span class="n">files</span><span class="p">,</span> <span class="n">directory</span> <span class="o">=</span> <span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;&#39;</span>
-    <span class="k">except</span> <span class="ne">FileNotFoundError</span><span class="p">:</span>
-        <span class="n">error</span> <span class="o">=</span> <span class="s1">&#39;Error: path </span><span class="si">{}</span><span class="s1"> for text files &#39;</span> \
-                <span class="s1">&#39;not found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">error</span><span class="p">)</span>
-        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">()</span>
-
     <span class="n">datarepo</span> <span class="o">=</span> <span class="n">DataRepo</span><span class="p">(</span><span class="n">token</span><span class="o">=</span><span class="n">token</span><span class="p">,</span> <span class="n">sandbox</span><span class="o">=</span><span class="n">sandbox</span><span class="p">)</span>
     <span class="n">datarepo</span><span class="o">.</span><span class="n">get_deposition_id</span><span class="p">()</span>
     <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_files</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">directory</span><span class="p">)</span>
     <span class="n">datarepo</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">(</span><span class="n">metadata</span><span class="p">)</span>
     <span class="n">datarepo</span><span class="o">.</span><span class="n">upload_metadata</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;-p&#39;</span><span class="p">]</span> <span class="ow">or</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--publish&#39;</span><span class="p">]:</span>
+    <span class="k">if</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--publish&#39;</span><span class="p">]:</span>
         <span class="n">datarepo</span><span class="o">.</span><span class="n">publish</span><span class="p">()</span>
+
+    <span class="c1"># Remove zip file create but if asked to keep it</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--nozip&#39;</span><span class="p">]</span> \
+            <span class="ow">and</span> <span class="ow">not</span> <span class="n">arguments</span><span class="p">[</span><span class="s1">&#39;--keep&#39;</span><span class="p">]</span> \
+            <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Remove created zip file: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">files</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s2">&quot;Finished &quot;</span> <span class="o">+</span> <span class="n">logger</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
 
 

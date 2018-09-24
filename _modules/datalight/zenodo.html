@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -295,10 +295,8 @@
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        _id: int</span>
-<span class="sd">            deposition id of the record to delete</span>
-
-<span class="sd">        .. note::</span>
-<span class="sd">            it worked only if it is not publish.</span>
+<span class="sd">            deposition id of the record to delete.</span>
+<span class="sd">            Can be done only if the record was not publish.</span>
 
 <span class="sd">        Exception</span>
 <span class="sd">        ---------</span>
@@ -324,7 +322,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">status_code</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Status code: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ZenodoException</span>
+                <span class="k">raise</span> <span class="n">ZenodoExceptionmaster</span>
         <span class="k">except</span> <span class="n">ZenodoException</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Request_url does not exist or bad token. &#39;</span> \
                       <span class="s1">&#39;Error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
@@ -480,7 +478,7 @@
 
         <span class="c1"># self._check_status_code(self.status_code)</span>
 
-<div class="viewcode-block" id="Zenodo.download_files"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.download_files">[docs]</a>    <span class="k">def</span> <span class="nf">download_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="Zenodo.download_files"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.download_files">[docs]</a>    <span class="k">def</span> <span class="nf">download_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doi</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Method to download file present in a specific record</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>

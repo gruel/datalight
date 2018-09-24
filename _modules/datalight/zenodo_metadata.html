@@ -12,7 +12,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <script type="text/javascript" src="../../_static/js/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="../../_static/js/jquery-fix.js"></script>
     <script type="text/javascript" src="../../_static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -285,6 +285,12 @@
             <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Metadata file not founded.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fmetadata</span><span class="p">)</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
             <span class="k">raise</span> <span class="n">ZenodoMetadataException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+        <span class="c1"># change communities identifier in lower case (only format accepted by zenodo)</span>
+        <span class="k">if</span> <span class="s1">&#39;communities&#39;</span> <span class="ow">in</span> <span class="n">_metadata</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">_com</span> <span class="ow">in</span> <span class="n">_metadata</span><span class="p">[</span><span class="s1">&#39;communities&#39;</span><span class="p">]:</span>
+                <span class="n">_com</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_com</span><span class="p">[</span><span class="s1">&#39;identifier&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
         <span class="k">return</span> <span class="n">_metadata</span>
 
     <span class="k">def</span> <span class="nf">_check_minimal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
