@@ -97,9 +97,11 @@
         <div id="sidebar" class="bs-sidenav" role="complementary"><ul>
 <li><a class="reference internal" href="#">datalight package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-datalight.common">datalight.common module</a></li>
 <li><a class="reference internal" href="#module-datalight.conf">datalight.conf module</a></li>
 <li><a class="reference internal" href="#module-datalight.datalight">datalight.datalight module</a></li>
 <li><a class="reference internal" href="#datalight-main-module">datalight.main module</a></li>
+<li><a class="reference internal" href="#module-datalight.token_tmp">datalight.token_tmp module</a></li>
 <li><a class="reference internal" href="#module-datalight.zenodo">datalight.zenodo module</a></li>
 <li><a class="reference internal" href="#module-datalight.zenodo_metadata">datalight.zenodo_metadata module</a></li>
 <li><a class="reference internal" href="#module-datalight">Module contents</a></li>
@@ -135,6 +137,54 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-datalight.common">
+<span id="datalight-common-module"></span><h2>datalight.common module<a class="headerlink" href="#module-datalight.common" title="Permalink to this headline">¶</a></h2>
+<dl class="exception">
+<dt id="datalight.common.DatalightException">
+<em class="property">exception </em><code class="descclassname">datalight.common.</code><code class="descname">DatalightException</code><a class="reference internal" href="../_modules/datalight/common.html#DatalightException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.common.DatalightException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<p>Class for exception</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="datalight.common.get_files_path">
+<code class="descclassname">datalight.common.</code><code class="descname">get_files_path</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/common.html#get_files_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.common.get_files_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function to get the path(s) of the file(s)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fname</strong> (<em>str</em>) – Name of the file to get the path or the directory to list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="datalight.common.unzip">
+<code class="descclassname">datalight.common.</code><code class="descname">unzip</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/common.html#unzip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.common.unzip" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="datalight.common.zipdata">
+<code class="descclassname">datalight.common.</code><code class="descname">zipdata</code><span class="sig-paren">(</span><em>files</em>, <em>zipname='data.zip'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/common.html#zipdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.common.zipdata" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method to zip files which will be uploaded to the data repository.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>files</strong> (<em>list</em>) – a list of string which contains the path of the files which will be
+part of the zip archive. Path will be conserved.</li>
+<li><strong>zipname</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the zip file to create. Default: data.zip</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="module-datalight.conf">
 <span id="datalight-conf-module"></span><h2>datalight.conf module<a class="headerlink" href="#module-datalight.conf" title="Permalink to this headline">¶</a></h2>
 <p>Module to contains the configuration of the zenoligth software</p>
@@ -158,31 +208,10 @@
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Nicolas Gruel &lt;<a class="reference external" href="mailto:nicolas&#46;gruel&#37;&#52;&#48;manchester&#46;ac&#46;uk">nicolas<span>&#46;</span>gruel<span>&#64;</span>manchester<span>&#46;</span>ac<span>&#46;</span>uk</a>&gt;</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">IT Services, The University of Mancheste</td>
+<tr class="field-even field"><th class="field-name">Copyright:</th><td class="field-body">IT Services, The University of Manchester</td>
 </tr>
 </tbody>
 </table>
-<dl class="exception">
-<dt id="datalight.datalight.DatalightException">
-<em class="property">exception </em><code class="descclassname">datalight.datalight.</code><code class="descname">DatalightException</code><a class="reference internal" href="../_modules/datalight/datalight.html#DatalightException"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.DatalightException" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-<p>Class for exception</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="datalight.datalight.get_files_path">
-<code class="descclassname">datalight.datalight.</code><code class="descname">get_files_path</code><span class="sig-paren">(</span><em>fname</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#get_files_path"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.get_files_path" title="Permalink to this definition">¶</a></dt>
-<dd><p>Function to get the path(s) of the file(s)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fname</strong> (<em>str</em>) – Name of the file to get the path or the directory to list</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 <dl class="function">
 <dt id="datalight.datalight.main">
 <code class="descclassname">datalight.datalight.</code><code class="descname">main</code><span class="sig-paren">(</span><em>args=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#main"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.main" title="Permalink to this definition">¶</a></dt>
@@ -223,33 +252,13 @@
 </table>
 </dd></dl>
 
-<dl class="function">
-<dt id="datalight.datalight.unzip">
-<code class="descclassname">datalight.datalight.</code><code class="descname">unzip</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#unzip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.unzip" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="datalight.datalight.zipdata">
-<code class="descclassname">datalight.datalight.</code><code class="descname">zipdata</code><span class="sig-paren">(</span><em>files</em>, <em>zipname='data.zip'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/datalight.html#zipdata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.datalight.zipdata" title="Permalink to this definition">¶</a></dt>
-<dd><p>Method to zip files which will be uploaded to the data repository.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>files</strong> (<em>list</em>) – a list of string which contains the path of the files which will be
-part of the zip archive. Path will be conserved.</li>
-<li><strong>zipname</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of the zip file to create. Default: data.zip</li>
-</ul>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </div>
 <div class="section" id="datalight-main-module">
 <h2>datalight.main module<a class="headerlink" href="#datalight-main-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-datalight.token_tmp">
+<span id="datalight-token-tmp-module"></span><h2>datalight.token_tmp module<a class="headerlink" href="#module-datalight.token_tmp" title="Permalink to this headline">¶</a></h2>
+<p>Manage the token creation. modification and reading</p>
 </div>
 <div class="section" id="module-datalight.zenodo">
 <span id="datalight-zenodo-module"></span><h2>datalight.zenodo module<a class="headerlink" href="#module-datalight.zenodo" title="Permalink to this headline">¶</a></h2>
@@ -420,7 +429,7 @@ return status &gt;= 400</li>
 
 <dl class="method">
 <dt id="datalight.zenodo.Zenodo.upload_metadata">
-<code class="descname">upload_metadata</code><span class="sig-paren">(</span><em>_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.upload_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.upload_metadata" title="Permalink to this definition">¶</a></dt>
+<code class="descname">upload_metadata</code><span class="sig-paren">(</span><em>metadata=None</em>, <em>_id=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/datalight/zenodo.html#Zenodo.upload_metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#datalight.zenodo.Zenodo.upload_metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload metadata to Zenodo repository.</p>
 <p>After creating the request and upload the file(s) we need to update
 the metadata needed by Zenodo related to the record.</p>

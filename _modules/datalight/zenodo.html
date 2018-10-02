@@ -123,6 +123,11 @@
 <span class="kn">import</span> <span class="nn">json</span>
 
 <span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.common</span> <span class="k">import</span> <span class="n">get_files_path</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">common</span> <span class="k">import</span> <span class="n">get_files_path</span>
+
+<span class="k">try</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">.conf</span> <span class="k">import</span> <span class="n">logger</span>
 <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
     <span class="kn">from</span> <span class="nn">conf</span> <span class="k">import</span> <span class="n">logger</span>
@@ -322,7 +327,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">status_code</span>
             <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Status code: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">))</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="n">ZenodoExceptionmaster</span>
+                <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Problem to connect to zenodo&#39;</span>
+                <span class="k">raise</span> <span class="n">ZenodoException</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
         <span class="k">except</span> <span class="n">ZenodoException</span><span class="p">:</span>
             <span class="n">message</span> <span class="o">=</span> <span class="s1">&#39;Request_url does not exist or bad token. &#39;</span> \
                       <span class="s1">&#39;Error: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">status_code</span><span class="p">)</span>
@@ -408,9 +414,10 @@
         <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
         <span class="n">_metadata</span> <span class="o">=</span> <span class="n">ZenodoMetadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span><span class="p">)</span>
-        <span class="k">return</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">_metadata</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()}</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_checked_metadata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;metadata&#39;</span><span class="p">:</span> <span class="n">_metadata</span><span class="o">.</span><span class="n">get_metadata</span><span class="p">()}</span></div>
+        <span class="c1">#return {&#39;metadata&#39;: _metadata.get_metadata()}</span>
 
-<div class="viewcode-block" id="Zenodo.upload_metadata"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.upload_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">upload_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="Zenodo.upload_metadata"><a class="viewcode-back" href="../../source/datalight.html#datalight.zenodo.Zenodo.upload_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">upload_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Upload metadata to Zenodo repository.</span>
 
 <span class="sd">        After creating the request and upload the file(s) we need to update</span>
@@ -428,7 +435,11 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_verify_token</span><span class="p">()</span>
-        <span class="n">metadata_to_upload</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="n">metadata</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">set_metadata</span><span class="p">()</span>
 
         <span class="k">if</span> <span class="n">_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">deposition_id</span> <span class="o">=</span> <span class="n">_id</span>
@@ -440,7 +451,7 @@
         <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">:</span> <span class="s2">&quot;application/json&quot;</span><span class="p">}</span>
         <span class="n">request</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">url</span><span class="p">,</span>
                                <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;access_token&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">token</span><span class="p">},</span>
-                               <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">metadata_to_upload</span><span class="p">),</span>
+                               <span class="n">data</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_checked_metadata</span><span class="p">),</span>
                                <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">status_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">status_code</span>

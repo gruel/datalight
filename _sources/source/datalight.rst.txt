@@ -4,6 +4,14 @@ datalight package
 Submodules
 ----------
 
+datalight.common module
+-----------------------
+
+.. automodule:: datalight.common
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 datalight.conf module
 ---------------------
 
@@ -24,6 +32,14 @@ datalight.main module
 ---------------------
 
 .. automodule:: datalight.main
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+datalight.token\_tmp module
+---------------------------
+
+.. automodule:: datalight.token_tmp
     :members:
     :undoc-members:
     :show-inheritance:

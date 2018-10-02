@@ -150,7 +150,7 @@ installation from source.</p>
 the <a class="reference external" href="https://github.com/gruel/datalight">Github repository</a>.</p>
 <p>the easiest way to install from the source is done by executing
 the following command:</p>
-<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -U https://github.com/gruel/datalight/archive/master.zip
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -U https://github.com/gruel/datalight/archive/master.zip --user
 </pre></div>
 </div>
 <p>You can either clone the public repository:</p>
@@ -172,7 +172,7 @@ the following command:</p>
 <p class="first admonition-title">Note</p>
 <p>on MacOS X, the downloaded the file could be uncompress automatically.
 In this case go to the directory were the code is and write:</p>
-<div class="last highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install . --user
+<div class="last highlight-shell notranslate"><div class="highlight"><pre><span></span>pip3 install -U . --user
 </pre></div>
 </div>
 </div>
@@ -183,12 +183,15 @@ without the need to be administrator or root on the system.</p>
 <p>Thhat prevent breaking any system-wide packages. It can happen that
 you’ll need to manually add the user base’s binary directory
 to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>.</p>
-<p>On Linux and macOS you can find the user base binary directory by running
-<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">site</span> <span class="pre">--user-base</span></code> and adding <code class="docutils literal notranslate"><span class="pre">bin</span></code> to the end. For example,
-this will typically print <code class="docutils literal notranslate"><span class="pre">~/.local</span></code> (with <code class="docutils literal notranslate"><span class="pre">~</span></code> expanded to the
-absolute path to your home directory) so you’ll need to add
-<code class="docutils literal notranslate"><span class="pre">~/.local/bin</span></code> to your <code class="docutils literal notranslate"><span class="pre">PATH</span></code>. You can set your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> permanently by
-modifying <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>.</p>
+<p>On Linux and macOS you can find the user base binary directory by running:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>python -m site --user-base
+</pre></div>
+</div>
+<p>and adding <code class="docutils literal notranslate"><span class="pre">bin</span></code> to the end of the path returned.</p>
+<p>For example, this will typically print <code class="docutils literal notranslate"><span class="pre">~/.local</span></code>
+(with <code class="docutils literal notranslate"><span class="pre">~</span></code> expanded to the absolute path to your home directory)
+so you’ll need to add <code class="docutils literal notranslate"><span class="pre">~/.local/bin</span></code> to your
+<code class="docutils literal notranslate"><span class="pre">PATH</span></code>. You can set your <code class="docutils literal notranslate"><span class="pre">PATH</span></code> permanently by modifying <code class="docutils literal notranslate"><span class="pre">~/.profile</span></code>.</p>
 <div class="highlight-console notranslate"><div class="highlight"><pre><span></span><span class="go">echo &#39;PATH=&quot;${PATH}:${HOME}/Library/Python/3.7/bin&quot;&#39; &gt;&gt; ~/.bash_profile</span>
 <span class="go">echo &#39;export PATH&#39; &gt;&gt; ~/.bash_profile</span>
 </pre></div>
